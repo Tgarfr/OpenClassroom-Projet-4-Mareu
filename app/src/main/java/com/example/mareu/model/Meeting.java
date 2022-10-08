@@ -10,13 +10,15 @@ public class Meeting {
 
     private int id;
     private String name;
-    private Calendar date;
+    private Calendar beginDate;
+    private Calendar endDate;
     private int room;
 
-    public Meeting(int id, String name, Calendar date, int room) {
+    public Meeting(int id, String name, Calendar beginDate, Calendar endDate, int room) {
         this.id = id;
         this.name = name;
-        this.date = date;
+        this.beginDate = beginDate;
+        this.endDate =  endDate;
         this.room = room;
     }
 
@@ -28,8 +30,12 @@ public class Meeting {
         return name;
     }
 
-    public Calendar getDate() {
-        return date;
+    public Calendar getBeginDate() {
+        return beginDate;
+    }
+
+    public Calendar getEndDate() {
+        return endDate;
     }
 
     public int getRoom() {
@@ -40,8 +46,12 @@ public class Meeting {
         this.name = name;
     }
 
-    public void setDate(Calendar date) {
-        this.date = date;
+    public void setBeginDate(Calendar beginDate) {
+        this.beginDate = beginDate;
+    }
+
+    public void setEndDate(Calendar endDate) {
+        this.endDate = endDate;
     }
 
     public void setRoom(int room) {

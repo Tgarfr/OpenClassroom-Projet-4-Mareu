@@ -29,9 +29,9 @@ public class MeetingListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_meeting);
 
         meetingRepository = MeetingRepository.getInstance();
-        meetingRepository.getMeetingList().add(new Meeting(0, "Réunion 1", Calendar.getInstance(), 1));
-        meetingRepository.getMeetingList().add(new Meeting(1, "Réunion 2", Calendar.getInstance(), 1));
-        meetingRepository.getMeetingList().add(new Meeting(2, "Réunion 3", Calendar.getInstance(), 1));
+        meetingRepository.getMeetingList().add(new Meeting(0, "Réunion 1", Calendar.getInstance(), Calendar.getInstance(), 1));
+        meetingRepository.getMeetingList().add(new Meeting(1, "Réunion 2", Calendar.getInstance(), Calendar.getInstance(), 2));
+        meetingRepository.getMeetingList().add(new Meeting(2, "Réunion 3", Calendar.getInstance(), Calendar.getInstance(), 3));
 
         recyclerView = findViewById(R.id.list_meetings);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
