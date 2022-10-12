@@ -1,43 +1,39 @@
 package com.example.mareu.ui.meeting_add;
 
-import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.DialogFragment;
 
 import com.example.mareu.R;
-import com.example.mareu.repository.MeetingRepository;
 import com.example.mareu.repository.RoomRepository;
-import com.example.mareu.ui.meeting_list.MeetingListActivity;
 
 import java.util.Calendar;
 
-public class MeetingAddActivity extends AppCompatActivity implements DateDialogFragment.ValidDateListener {
+public class MeetingAddActivity extends AppCompatActivity implements DateDialogFragment.ValidDateListener, HourDialogFragment.ValidHourListener {
 
     private Button dateLayout;
+    private Button hourLayout;
     private Calendar date;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_meeting);
+        date = Calendar.getInstance();
 
         EditText nameLayout = findViewById(R.id.add_meeting_name);
         dateLayout = findViewById(R.id.add_meeting_date_button);
-        Button timeLayout = findViewById(R.id.add_meeting_time_button);
+        hourLayout = findViewById(R.id.add_meeting_hour_button);
         Button durationLayout = findViewById(R.id.add_meeting_duration_button);
         Spinner roomLayout = findViewById(R.id.add_meeting_room_spinner);
+
+        displayDate();
+        displayHour();
 
         RoomRepository roomRepositoryRepository = RoomRepository.getInstance();
         RoomSpinnerAdapter adapter = new RoomSpinnerAdapter(roomRepositoryRepository);
@@ -46,15 +42,39 @@ public class MeetingAddActivity extends AppCompatActivity implements DateDialogF
         dateLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DateDialogFragment dateDialogFragment =  new DateDialogFragment();
+                DateDialogFragment dateDialogFragment =  new DateDialogFragment(date.get(Calendar.DAY_OF_MONTH),date.get(Calendar.MONTH),date.get(Calendar.YEAR));
                 dateDialogFragment.show(getSupportFragmentManager(),"Calendrier");
             }
+        });
+        hourLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HourDialogFragment hourDialogFragment = new HourDialogFragment(date.get(Calendar.HOUR_OF_DAY), date.get(Calendar.MINUTE));
+                hourDialogFragment.show(getSupportFragmentManager(), "Hour");
+           }
         });
     }
 
     @Override
-    public void validDateClick(Calendar date) {
-        this.date = date;
+    public void validDateClick(int dayOfMonth, int month, int year) {
+        date.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        date.set(Calendar.MONTH, month);
+        date.set(Calendar.YEAR, year);
+        displayDate();
+    }
+
+    @Override
+    public void validHourClick(int hourOfDay, int minute) {
+        date.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        date.set(Calendar.MINUTE, minute);
+        displayHour();
+    }
+
+    public void displayDate() {
         dateLayout.setText(date.get(Calendar.DAY_OF_MONTH)+"-"+date.get(Calendar.MONTH)+"-"+date.get(Calendar.YEAR));
     }
+    public void displayHour() {
+        hourLayout.setText(date.get(Calendar.HOUR_OF_DAY)+" : "+date.get(Calendar.MINUTE));
+    }
+
 }

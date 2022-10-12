@@ -49,11 +49,11 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@id/add_meeting_duration_title"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/add_meeting_time_button"
+        app:layout_constraintRight_toLeftOf="@id/add_meeting_hour_button"
         app:layout_constraintTop_toBottomOf="@id/add_meeting_begin_time_title" />
 
     <Button
-        android:id="@+id/add_meeting_time_button"
+        android:id="@+id/add_meeting_hour_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="10h30"
@@ -98,7 +98,7 @@
         app:layout_constraintBottom_toTopOf="@id/add_meeting_room_spinner"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_meeting_time_button" />
+        app:layout_constraintTop_toBottomOf="@id/add_meeting_hour_button" />
 
     <Spinner
         android:id="@+id/add_meeting_room_spinner"

@@ -6,6 +6,8 @@
         <entry key="app/src/main/res/layout/activity_add_meeting.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_list_meeting.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/dialog_calendar.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/dialog_hour.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_list_meeting.xml" value="0.2388888888888889" />
         <entry key="app/src/main/res/layout/item_list_meeting.xml" value="0.203125" />
         <entry key="app/src/main/res/layout/item_meeting.xml" value="0.33" />

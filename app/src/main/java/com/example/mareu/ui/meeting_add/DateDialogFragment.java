@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CalendarView;
 
 import androidx.fragment.app.DialogFragment;
@@ -14,10 +15,20 @@ import java.util.Calendar;
 
 public class DateDialogFragment extends DialogFragment {
 
-    private Calendar date;
+    CalendarView calendarView;
+    private int dayOfMonth;
+    private int month;
+    private int year;
 
     interface ValidDateListener {
-        void validDateClick(Calendar date);
+        void validDateClick(int dayOfMonth, int month, int year);
+    }
+
+    public DateDialogFragment(int dayOfMonth, int month, int year) {
+        this.dayOfMonth = dayOfMonth;
+        this.month = month;
+        this.year = year;
+
     }
 
     @Override
@@ -26,20 +37,37 @@ public class DateDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         View view = getLayoutInflater().inflate(R.layout.dialog_calendar, null);
-        CalendarView calendarView = view.findViewById(R.id.dialog_calendar_calendar);
+        calendarView = view.findViewById(R.id.dialog_calendar);
+        Button validateButton = view.findViewById(R.id.dialog_date_button);
+        setDateToCalendarView();
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
               @Override
-              public void onSelectedDayChange(CalendarView calendarView, int year, int month, int dayOfMonth) {
-                  date = Calendar.getInstance();
-                  date.set(year, month, dayOfMonth);
-                  ValidDateListener listener = (ValidDateListener) getActivity();
-                  listener.validDateClick(date);
-                  dismiss();
+              public void onSelectedDayChange(CalendarView calendarView, int calendarViewYear, int calendarViewMonth, int calendarViewDayOfMonth) {
+                  dayOfMonth = calendarViewDayOfMonth;
+                  month = calendarViewMonth;
+                  year = calendarViewYear;
               }
+        });
+
+        validateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ValidDateListener listener = (ValidDateListener) getActivity();
+                listener.validDateClick(dayOfMonth, month, year);
+                dismiss();
+            }
         });
 
         builder.setView(view);
         return builder.create();
+    }
+
+    public void setDateToCalendarView() {
+        Calendar date = Calendar.getInstance();
+        date.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        date.set(Calendar.MONTH, month);
+        date.set(Calendar.YEAR, year);
+        calendarView.setDate(date.getTimeInMillis());
     }
 }
