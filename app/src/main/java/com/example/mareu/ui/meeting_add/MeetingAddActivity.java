@@ -18,22 +18,27 @@ public class MeetingAddActivity extends AppCompatActivity implements DateDialogF
 
     private Button dateLayout;
     private Button hourLayout;
+    private Button endTimeLayout;
     private Calendar date;
+    private Calendar endTime;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_meeting);
         date = Calendar.getInstance();
+        endTime = Calendar.getInstance();
+        endTime.add(Calendar.MINUTE, 45);
 
         EditText nameLayout = findViewById(R.id.add_meeting_name);
         dateLayout = findViewById(R.id.add_meeting_date_button);
         hourLayout = findViewById(R.id.add_meeting_hour_button);
-        Button durationLayout = findViewById(R.id.add_meeting_duration_button);
+        endTimeLayout = findViewById(R.id.add_meeting_endTime_button);
         Spinner roomLayout = findViewById(R.id.add_meeting_room_spinner);
 
         displayDate();
         displayHour();
+        displayEndTime();
 
         RoomRepository roomRepositoryRepository = RoomRepository.getInstance();
         RoomSpinnerAdapter adapter = new RoomSpinnerAdapter(roomRepositoryRepository);
@@ -49,9 +54,16 @@ public class MeetingAddActivity extends AppCompatActivity implements DateDialogF
         hourLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HourDialogFragment hourDialogFragment = new HourDialogFragment(date.get(Calendar.HOUR_OF_DAY), date.get(Calendar.MINUTE));
+                HourDialogFragment hourDialogFragment = new HourDialogFragment(date.get(Calendar.HOUR_OF_DAY), date.get(Calendar.MINUTE), HourDialogFragment.Tag.BEGINHOUR);
                 hourDialogFragment.show(getSupportFragmentManager(), "Hour");
            }
+        });
+        endTimeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HourDialogFragment hourDialogFragment = new HourDialogFragment(endTime.get(Calendar.HOUR_OF_DAY), endTime.get(Calendar.MINUTE), HourDialogFragment.Tag.ENDHOUR);
+                hourDialogFragment.show(getSupportFragmentManager(), "EndTime");
+            }
         });
     }
 
@@ -64,10 +76,17 @@ public class MeetingAddActivity extends AppCompatActivity implements DateDialogF
     }
 
     @Override
-    public void validHourClick(int hourOfDay, int minute) {
-        date.set(Calendar.HOUR_OF_DAY, hourOfDay);
-        date.set(Calendar.MINUTE, minute);
-        displayHour();
+    public void validHourClick(int hourOfDay, int minute, HourDialogFragment.Tag tag) {
+        if (tag == HourDialogFragment.Tag.BEGINHOUR) {
+            date.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            date.set(Calendar.MINUTE, minute);
+            displayHour();
+        }
+        else if (tag == HourDialogFragment.Tag.ENDHOUR) {
+            endTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            endTime.set(Calendar.MINUTE, minute);
+            displayEndTime();
+        }
     }
 
     public void displayDate() {
@@ -75,6 +94,9 @@ public class MeetingAddActivity extends AppCompatActivity implements DateDialogF
     }
     public void displayHour() {
         hourLayout.setText(date.get(Calendar.HOUR_OF_DAY)+" : "+date.get(Calendar.MINUTE));
+    }
+    public void displayEndTime() {
+        endTimeLayout.setText(endTime.get(Calendar.HOUR_OF_DAY)+" : "+endTime.get(Calendar.MINUTE));
     }
 
 }

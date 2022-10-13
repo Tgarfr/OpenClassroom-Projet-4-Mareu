@@ -17,14 +17,17 @@ public class HourDialogFragment extends DialogFragment {
     TimePicker timePicker;
     private int hourOfDay;
     private int minute;
+    public enum Tag { BEGINHOUR, ENDHOUR };
+    private Tag tag;
 
     interface ValidHourListener {
-        void validHourClick(int hourOfDay, int minute);
+        void validHourClick(int hourOfDay, int minute, Tag tag);
     }
 
-    public HourDialogFragment(int hourOfDay, int minute) {
+    public HourDialogFragment(int hourOfDay, int minute, Tag tag) {
         this.hourOfDay = hourOfDay;
         this.minute = minute;
+        this.tag = tag;
     }
 
     @Override
@@ -50,7 +53,7 @@ public class HourDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 ValidHourListener listener = (ValidHourListener) getActivity();
-                listener.validHourClick(hourOfDay, minute);
+                listener.validHourClick(hourOfDay, minute, tag);
                 dismiss();
             }
         });
