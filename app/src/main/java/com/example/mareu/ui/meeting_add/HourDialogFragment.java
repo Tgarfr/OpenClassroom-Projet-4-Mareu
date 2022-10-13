@@ -1,6 +1,7 @@
 package com.example.mareu.ui.meeting_add;
 
 import android.app.Dialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +34,7 @@ public class HourDialogFragment extends DialogFragment {
 
         View view = getLayoutInflater().inflate(R.layout.dialog_hour, null);
         timePicker = view.findViewById(R.id.dialog_hour);
+        timePicker.setIs24HourView(true);
         Button validateButton = view.findViewById(R.id.dialog_hour_button);
         setHourToTimePicker();
 
@@ -58,7 +60,13 @@ public class HourDialogFragment extends DialogFragment {
     }
 
     public void setHourToTimePicker() {
-        timePicker.setCurrentHour(hourOfDay);
-        timePicker.setCurrentMinute(minute);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            timePicker.setHour(hourOfDay);
+            timePicker.setMinute(minute);
+        }
+        else {
+            timePicker.setCurrentHour(hourOfDay);
+            timePicker.setCurrentMinute(minute);
+        }
     }
 }
