@@ -108,13 +108,13 @@
         android:layout_marginRight="50dp"
         android:prompt="@string/meeting_add_spinner_prompt"
         android:spinnerMode="dialog"
-        app:layout_constraintBottom_toTopOf="@id/add_meeting_contributor"
+        app:layout_constraintBottom_toTopOf="@id/add_meeting_participant_title"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/add_meeting_room_spinner_title" />
 
     <TextView
-        android:id="@+id/add_meeting_contributor"
+        android:id="@+id/add_meeting_participant_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -124,5 +124,34 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/add_meeting_room_spinner" />
+
+    <Button
+        android:id="@+id/add_meeting_participant_list_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Liste des participants"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add_meeting_participant_title" />
+
+    <EditText
+        android:id="@+id/add_meeting_participant_add_EditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/add_meeting_participant_add_button"
+        app:layout_constraintTop_toBottomOf="@id/add_meeting_participant_list_button" />
+
+    <Button
+        android:id="@+id/add_meeting_participant_add_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ajout"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toRightOf="@id/add_meeting_participant_add_EditText"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add_meeting_participant_list_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
