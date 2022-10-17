@@ -7,7 +7,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mareu.R;
@@ -35,19 +34,16 @@ public class MeetingListRecyclerViewAdapter extends RecyclerView.Adapter<Meeting
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final String nameDisplay = meetingRepository.getMeetingList().get(position).getName();
-        final Calendar beginDate = meetingRepository.getMeetingList().get(position).getBeginDate();
-        final String hourDisplay = beginDate.get(Calendar.HOUR_OF_DAY)+"h"+beginDate.get(Calendar.MINUTE);
-        final Room room = meetingRepository.getMeetingList().get(position).getRoom();
-        final String roomDiplay = room.getName();
-        holder.meetingNameLayout.setText(nameDisplay+" - "+hourDisplay+" - "+roomDiplay);
+        holder.meetingNameLayout.setText(line1Display(position));
+        holder.meetingEmailsLayout.setText(line2Display(position));
 
-        final List<Participant> participantList = meetingRepository.getMeetingList().get(position).getParticipantList();
-        String participantEmailDiplay = participantList.get(0).getEmail();
-        for (int i = 1; i < participantList.size(); i++ ) {
-            participantEmailDiplay = participantEmailDiplay+", "+participantList.get(i).getEmail();
-        }
-        holder.meetingEmailsLayout.setText(participantEmailDiplay);
+        holder.meetingDeleteButtonLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                meetingRepository.deleteMeeting(meetingRepository.getMeetingList().get(position));
+                notifyItemRemoved(position);
+            }
+        });
     }
 
     @Override
@@ -64,5 +60,23 @@ public class MeetingListRecyclerViewAdapter extends RecyclerView.Adapter<Meeting
         public ViewHolder(View itemView) {
             super(itemView);
         }
+    }
+
+    private String line1Display(int positionItem) {
+        final String nameDisplay = meetingRepository.getMeetingList().get(positionItem).getName();
+        final Calendar beginDate = meetingRepository.getMeetingList().get(positionItem).getBeginDate();
+        final String hourDisplay = beginDate.get(Calendar.HOUR_OF_DAY)+"h"+beginDate.get(Calendar.MINUTE);
+        final Room room = meetingRepository.getMeetingList().get(positionItem).getRoom();
+        final String roomDiplay = room.getName();
+        return nameDisplay+" - "+hourDisplay+" - "+roomDiplay;
+    }
+
+    private String line2Display(int positionItem) {
+        final List<Participant> participantList = meetingRepository.getMeetingList().get(positionItem).getParticipantList();
+        String participantEmailListDiplay = participantList.get(0).getEmail();
+        for (int i = 1; i < participantList.size(); i++ ) {
+            participantEmailListDiplay = participantEmailListDiplay+", "+participantList.get(i).getEmail();
+        }
+        return participantEmailListDiplay;
     }
 }

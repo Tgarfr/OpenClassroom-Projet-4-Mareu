@@ -31,6 +31,12 @@ public class MeetingRepository {
         meetingList.add(newMeeting);
     }
 
+    public void deleteMeeting(Meeting meeting) {
+        if (meetingList.contains(meeting)) {
+            meetingList.remove(meeting);
+        }
+    }
+
     public int countMeeting() {
         return meetingList.size();
     }
