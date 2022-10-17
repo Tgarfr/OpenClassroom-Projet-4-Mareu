@@ -10,6 +10,7 @@
         <entry key="app/src/main/res/layout/dialog_contributor.xml" value="0.1765625" />
         <entry key="app/src/main/res/layout/dialog_contributor_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/dialog_hour.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/dialog_participant_list.xml" value="0.21145833333333333" />
         <entry key="app/src/main/res/layout/fragment_list_meeting.xml" value="0.2388888888888889" />
         <entry key="app/src/main/res/layout/item_dialog_contributor.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_dialog_contributor_list.xml" value="0.33" />

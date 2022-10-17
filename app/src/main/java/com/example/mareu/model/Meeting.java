@@ -5,6 +5,7 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.List;
 
 public class Meeting {
 
@@ -12,14 +13,16 @@ public class Meeting {
     private String name;
     private Calendar beginDate;
     private Calendar endDate;
-    private int room;
+    private Room room;
+    private List<Participant> participantList;
 
-    public Meeting(int id, String name, Calendar beginDate, Calendar endDate, int room) {
+    public Meeting(int id, String name, Calendar beginDate, Calendar endDate, Room room, List<Participant> participantList) {
         this.id = id;
         this.name = name;
         this.beginDate = beginDate;
         this.endDate =  endDate;
         this.room = room;
+        this.participantList = participantList;
     }
 
     public int getId() {
@@ -38,8 +41,12 @@ public class Meeting {
         return endDate;
     }
 
-    public int getRoom() {
+    public Room getRoom() {
         return room;
+    }
+
+    public List<Participant> getParticipantList() {
+        return participantList;
     }
 
     public void setName(String name) {
@@ -54,7 +61,11 @@ public class Meeting {
         this.endDate = endDate;
     }
 
-    public void setRoom(int room) {
+    public void setRoom(Room room) {
         this.room = room;
+    }
+
+    public void setParticipantList(List<Participant> participantList) {
+        this.participantList = participantList;
     }
 }

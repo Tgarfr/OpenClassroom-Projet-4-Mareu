@@ -1,8 +1,11 @@
 package com.example.mareu.repository;
 
 import com.example.mareu.model.Meeting;
+import com.example.mareu.model.Participant;
+import com.example.mareu.model.Room;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MeetingRepository {
@@ -21,6 +24,11 @@ public class MeetingRepository {
 
     public List<Meeting> getMeetingList() {
         return meetingList;
+    }
+
+    public void addMeeting(String name, Calendar beginDate, Calendar endDate, Room room, List<Participant> participantList) {
+        Meeting newMeeting = new Meeting(1, name, beginDate, endDate, room, participantList);
+        meetingList.add(newMeeting);
     }
 
     public int countMeeting() {

@@ -11,7 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mareu.R;
+import com.example.mareu.model.Participant;
+import com.example.mareu.model.Room;
 import com.example.mareu.repository.MeetingRepository;
+
+import java.util.Calendar;
+import java.util.List;
 
 public class MeetingListRecyclerViewAdapter extends RecyclerView.Adapter<MeetingListRecyclerViewAdapter.ViewHolder> {
 
@@ -21,8 +26,6 @@ public class MeetingListRecyclerViewAdapter extends RecyclerView.Adapter<Meeting
         this.meetingRepository = meetingRepository;
     }
 
-
-    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -32,7 +35,19 @@ public class MeetingListRecyclerViewAdapter extends RecyclerView.Adapter<Meeting
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.meetingNameLayout.setText(meetingRepository.getMeetingList().get(position).getName());
+        final String nameDisplay = meetingRepository.getMeetingList().get(position).getName();
+        final Calendar beginDate = meetingRepository.getMeetingList().get(position).getBeginDate();
+        final String hourDisplay = beginDate.get(Calendar.HOUR_OF_DAY)+"h"+beginDate.get(Calendar.MINUTE);
+        final Room room = meetingRepository.getMeetingList().get(position).getRoom();
+        final String roomDiplay = room.getName();
+        holder.meetingNameLayout.setText(nameDisplay+" - "+hourDisplay+" - "+roomDiplay);
+
+        final List<Participant> participantList = meetingRepository.getMeetingList().get(position).getParticipantList();
+        String participantEmailDiplay = participantList.get(0).getEmail();
+        for (int i = 1; i < participantList.size(); i++ ) {
+            participantEmailDiplay = participantEmailDiplay+", "+participantList.get(i).getEmail();
+        }
+        holder.meetingEmailsLayout.setText(participantEmailDiplay);
     }
 
     @Override

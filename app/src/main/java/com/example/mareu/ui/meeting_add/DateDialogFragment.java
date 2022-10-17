@@ -28,7 +28,6 @@ public class DateDialogFragment extends DialogFragment {
         this.dayOfMonth = dayOfMonth;
         this.month = month;
         this.year = year;
-
     }
 
     @Override
