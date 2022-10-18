@@ -6,6 +6,8 @@ import com.example.mareu.model.Room;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MeetingRepository {
@@ -39,5 +41,25 @@ public class MeetingRepository {
 
     public int countMeeting() {
         return meetingList.size();
+    }
+
+    public void sortByDate() {
+        Comparator<Meeting> comparator = new Comparator<Meeting>() {
+            @Override
+            public int compare(Meeting meeting1, Meeting meeting2) {
+                return (int) (meeting1.getBeginDate().getTimeInMillis() - meeting2.getBeginDate().getTimeInMillis());
+            }
+        };
+        Collections.sort(meetingList,comparator);
+    }
+
+    public void sortByRoom() {
+        Comparator<Meeting> comparator = new Comparator<Meeting>() {
+            @Override
+            public int compare(Meeting meeting1, Meeting meeting2) {
+                return meeting1.getRoom().getId() - meeting2.getRoom().getId();
+            }
+        };
+        Collections.sort(meetingList,comparator);
     }
 }

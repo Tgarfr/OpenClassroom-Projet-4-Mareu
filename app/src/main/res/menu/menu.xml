@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/sort"
+        android:icon="@drawable/ic_baseline_filter_list_24"
+        android:title="Tier"
+        app:showAsAction="always">
+        <menu>
+            <item android:id="@+id/sort_by_date"
+                android:title="Par date"/>
+            <item android:id="@+id/sort_by_room"
+                android:title="Par lieu"/>
+        </menu>
+    </item>
+
+    <item android:id="@+id/sampleMeeting"
+        android:title="Ajouter exemple"
+        app:showAsAction="never" />
+
+</menu>

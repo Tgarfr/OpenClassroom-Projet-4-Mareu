@@ -182,13 +182,13 @@ public class MeetingAddActivity extends AppCompatActivity implements DateDialogF
         nameLayout.setText(name);
     }
     public void displayBeginTimeDate() {
-        beginTimeDateLayout.setText(beginTime.get(Calendar.DAY_OF_MONTH)+"-"+ beginTime.get(Calendar.MONTH)+"-"+ beginTime.get(Calendar.YEAR));
+        beginTimeDateLayout.setText(new SimpleDateFormat("d-M-y", getResources().getConfiguration().locale).format(beginTime.getTime()));
     }
     public void displayBeginTimeHour() {
-        beginTileHourLayout.setText(beginTime.get(Calendar.HOUR_OF_DAY)+" : "+ beginTime.get(Calendar.MINUTE));
+        beginTimeHourLayout.setText(new SimpleDateFormat("HH : mm", getResources().getConfiguration().locale).format(beginTime.getTime()));
     }
     public void displayEndTimeHour() {
-        endTimeHourLayout.setText(endTime.get(Calendar.HOUR_OF_DAY)+" : "+endTime.get(Calendar.MINUTE));
+        endTimeHourLayout.setText(new SimpleDateFormat("HH : mm", getResources().getConfiguration().locale).format(endTime.getTime()));
     }
     public void displayParticipantCount() {
         participantTitleLayout.setText("Participants : "+ participantList.size());

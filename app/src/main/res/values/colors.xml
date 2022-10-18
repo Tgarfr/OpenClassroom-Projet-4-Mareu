@@ -8,4 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#CF1010</color>
+
+    <color name="meetingListRedCircle">#F3C2C2</color>
+    <color name="meetingListGreenCircle">#9ED1A7</color>
 </resources>
