@@ -3,6 +3,8 @@ package com.example.mareu;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import android.util.Log;
+
 import com.example.mareu.model.Meeting;
 import com.example.mareu.model.Participant;
 import com.example.mareu.model.Room;
@@ -73,6 +75,55 @@ public class MeetingRepositoryTest {
         assertEquals(expectedMeetingCount-1, actualMeetingCount);
     }
 
+
+    @Test
+    public void sortByDate() {
+        // Arrange
+        Meeting fakeMeeting = getFakeMeeting();
+        Calendar january = Calendar.getInstance();
+        Calendar february = Calendar.getInstance();
+        Calendar march = Calendar.getInstance();
+        Calendar april = Calendar.getInstance();
+        Calendar may = Calendar.getInstance();
+        january.set(Calendar.MONTH, 1);
+        february.set(Calendar.MONTH, 2);
+        march.set(Calendar.MONTH, 3);
+        april.set(Calendar.MONTH, 4);
+        may.set(Calendar.MONTH, 5);
+        meetingRepository.addMeeting("March meeting", march, fakeMeeting.getEndDate(), fakeMeeting.getRoom(), fakeMeeting.getParticipantList());
+        meetingRepository.addMeeting("May meeting", may, fakeMeeting.getEndDate(), fakeMeeting.getRoom(), fakeMeeting.getParticipantList());
+        meetingRepository.addMeeting("April meeting", april, fakeMeeting.getEndDate(), fakeMeeting.getRoom(), fakeMeeting.getParticipantList());
+        meetingRepository.addMeeting("January meeting", january, fakeMeeting.getEndDate(), fakeMeeting.getRoom(), fakeMeeting.getParticipantList());
+        meetingRepository.addMeeting("February meeting", february, fakeMeeting.getEndDate(), fakeMeeting.getRoom(), fakeMeeting.getParticipantList());
+
+        // Act
+        meetingRepository.sortByDate();
+
+        // Assert
+        for (int i = 0; i < meetingRepository.countMeeting()-1; i++) {
+            assertTrue(meetingRepository.getMeetingList().get(i).getBeginDate().before(meetingRepository.getMeetingList().get(i+1).getBeginDate()));
+        }
+    }
+
+    @Test
+    public void sortByRoom() {
+        // Arrange
+        Meeting fakeMeeting = getFakeMeeting();
+        meetingRepository.addMeeting("Room 0 meeting", fakeMeeting.getBeginDate(), fakeMeeting.getEndDate(), new Room(0, "Room 0"), fakeMeeting.getParticipantList());
+        meetingRepository.addMeeting("Room 5 meeting", fakeMeeting.getBeginDate(), fakeMeeting.getEndDate(), new Room(5, "Room 5"), fakeMeeting.getParticipantList());
+        meetingRepository.addMeeting("Room 8 meeting", fakeMeeting.getBeginDate(), fakeMeeting.getEndDate(), new Room(8, "Room 8"), fakeMeeting.getParticipantList());
+        meetingRepository.addMeeting("Room 4 meeting", fakeMeeting.getBeginDate(), fakeMeeting.getEndDate(), new Room(4, "Room 4"), fakeMeeting.getParticipantList());
+        meetingRepository.addMeeting("Room 3 meeting", fakeMeeting.getBeginDate(), fakeMeeting.getEndDate(), new Room(3, "Room 3"), fakeMeeting.getParticipantList());
+
+        // Act
+        meetingRepository.sortByRoom();
+
+        // Assert
+        for (int i = 0; i < meetingRepository.countMeeting()-1; i++) {
+            assertTrue(meetingRepository.getMeetingList().get(i).getRoom().getId() <= meetingRepository.getMeetingList().get(i+1).getRoom().getId());
+        }
+    }
+
     private Meeting getFakeMeeting() {
         String name = "Meeting Name Test";
         Calendar beginDate = Calendar.getInstance();
@@ -85,6 +136,4 @@ public class MeetingRepositoryTest {
         participantList.add(new Participant("test3@laposte.net"));
         return new Meeting(0L, name, beginDate, endDate, room, participantList);
     }
-
-
 }
