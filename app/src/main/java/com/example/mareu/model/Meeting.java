@@ -1,9 +1,5 @@
 package com.example.mareu.model;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.List;
 

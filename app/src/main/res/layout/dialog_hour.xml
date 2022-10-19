@@ -7,12 +7,12 @@
     <TimePicker
         android:id="@+id/dialog_hour"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/dialog_hour_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="OK"/>
+        android:text="OK" />
 
 </LinearLayout>

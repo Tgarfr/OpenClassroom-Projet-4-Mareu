@@ -20,8 +20,8 @@ public class DateDialogFragment extends DialogFragment {
     private int month;
     private int year;
 
-    interface ValidDateListener {
-        void validDateClick(int dayOfMonth, int month, int year);
+    interface ValidDateDialogListener {
+        void getDateDialogFragment(int dayOfMonth, int month, int year);
     }
 
     public DateDialogFragment(int dayOfMonth, int month, int year) {
@@ -52,8 +52,8 @@ public class DateDialogFragment extends DialogFragment {
         validateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ValidDateListener listener = (ValidDateListener) getActivity();
-                listener.validDateClick(dayOfMonth, month, year);
+                ValidDateDialogListener listener = (ValidDateDialogListener) getActivity();
+                listener.getDateDialogFragment(dayOfMonth, month, year);
                 dismiss();
             }
         });

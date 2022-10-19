@@ -20,8 +20,8 @@ public class HourDialogFragment extends DialogFragment {
     public enum Tag { BEGINHOUR, ENDHOUR };
     private Tag tag;
 
-    interface ValidHourListener {
-        void validHourClick(int hourOfDay, int minute, Tag tag);
+    interface ValidHourDialogListener {
+        void getHourDialogFragment(int hourOfDay, int minute, Tag tag);
     }
 
     public HourDialogFragment(int hourOfDay, int minute, Tag tag) {
@@ -48,12 +48,11 @@ public class HourDialogFragment extends DialogFragment {
                 minute = timePikerminute;
             }
         });
-
         validateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ValidHourListener listener = (ValidHourListener) getActivity();
-                listener.validHourClick(hourOfDay, minute, tag);
+                ValidHourDialogListener listener = (ValidHourDialogListener) getActivity();
+                listener.getHourDialogFragment(hourOfDay, minute, tag);
                 dismiss();
             }
         });
