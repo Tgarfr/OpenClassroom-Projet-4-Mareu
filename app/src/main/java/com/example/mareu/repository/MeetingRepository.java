@@ -29,7 +29,7 @@ public class MeetingRepository {
     }
 
     public void addMeeting(String name, Calendar beginDate, Calendar endDate, Room room, List<Participant> participantList) {
-        Meeting newMeeting = new Meeting(1, name, beginDate, endDate, room, participantList);
+        Meeting newMeeting = new Meeting(System.currentTimeMillis(), name, beginDate, endDate, room, participantList);
         meetingList.add(newMeeting);
     }
 

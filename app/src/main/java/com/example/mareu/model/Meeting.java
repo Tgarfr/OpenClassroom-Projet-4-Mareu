@@ -5,14 +5,14 @@ import java.util.List;
 
 public class Meeting {
 
-    private int id;
+    private Long id;
     private String name;
     private Calendar beginDate;
     private Calendar endDate;
     private Room room;
     private List<Participant> participantList;
 
-    public Meeting(int id, String name, Calendar beginDate, Calendar endDate, Room room, List<Participant> participantList) {
+    public Meeting(Long id, String name, Calendar beginDate, Calendar endDate, Room room, List<Participant> participantList) {
         this.id = id;
         this.name = name;
         this.beginDate = beginDate;
@@ -21,7 +21,7 @@ public class Meeting {
         this.participantList = participantList;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
