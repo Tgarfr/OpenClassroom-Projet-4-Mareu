@@ -47,7 +47,15 @@ public class MeetingRepository {
         Comparator<Meeting> comparator = new Comparator<Meeting>() {
             @Override
             public int compare(Meeting meeting1, Meeting meeting2) {
-                return (int) (meeting1.getBeginDate().getTimeInMillis() - meeting2.getBeginDate().getTimeInMillis());
+                if (meeting1.getBeginDate().before(meeting2.getBeginDate())) {
+                    return -1;
+                }
+                if (meeting1.getBeginDate().after(meeting2.getBeginDate())) {
+                    return 1;
+                }
+                else {
+                    return 0;
+                }
             }
         };
         Collections.sort(meetingList,comparator);
