@@ -5,7 +5,7 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CalendarView;
+import android.widget.DatePicker;
 
 import androidx.fragment.app.DialogFragment;
 
@@ -15,7 +15,7 @@ import java.util.Calendar;
 
 public class DateDialogFragment extends DialogFragment {
 
-    CalendarView calendarView;
+    DatePicker datePickerView;
     private int dayOfMonth;
     private int month;
     private int year;
@@ -36,22 +36,17 @@ public class DateDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         View view = getLayoutInflater().inflate(R.layout.dialog_calendar, null);
-        calendarView = view.findViewById(R.id.dialog_calendar);
+        datePickerView = view.findViewById(R.id.dialog_date_picker);
         Button validateButton = view.findViewById(R.id.dialog_date_button);
         setDateToCalendarView();
-
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-              @Override
-              public void onSelectedDayChange(CalendarView calendarView, int calendarViewYear, int calendarViewMonth, int calendarViewDayOfMonth) {
-                  dayOfMonth = calendarViewDayOfMonth;
-                  month = calendarViewMonth;
-                  year = calendarViewYear;
-              }
-        });
 
         validateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dayOfMonth = datePickerView.getDayOfMonth();
+                month = datePickerView.getMonth()+1;
+                year = datePickerView.getYear();
+
                 ValidDateDialogListener listener = (ValidDateDialogListener) getActivity();
                 listener.getDateDialogFragment(dayOfMonth, month, year);
                 dismiss();
@@ -67,6 +62,6 @@ public class DateDialogFragment extends DialogFragment {
         date.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         date.set(Calendar.MONTH, month);
         date.set(Calendar.YEAR, year);
-        calendarView.setDate(date.getTimeInMillis());
+        datePickerView.updateDate(year, month, dayOfMonth);
     }
 }
