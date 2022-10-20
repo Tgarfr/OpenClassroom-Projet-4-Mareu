@@ -8,6 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="Email"
+        android:text="@string/dialog_list_participant_email"
         android:textSize="20sp" />
 </FrameLayout>

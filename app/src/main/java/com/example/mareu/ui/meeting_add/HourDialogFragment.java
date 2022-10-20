@@ -18,7 +18,7 @@ public class HourDialogFragment extends DialogFragment {
     private int hourOfDay;
     private int minute;
     public enum Tag { BEGINHOUR, ENDHOUR };
-    private Tag tag;
+    private final Tag tag;
 
     interface ValidHourDialogListener {
         void getHourDialogFragment(int hourOfDay, int minute, Tag tag);

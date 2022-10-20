@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Meeting {
 
-    private Long id;
+    private final Long id;
     private String name;
     private Calendar beginDate;
     private Calendar endDate;

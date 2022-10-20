@@ -34,9 +34,7 @@ public class MeetingRepository {
     }
 
     public void deleteMeeting(Meeting meeting) {
-        if (meetingList.contains(meeting)) {
-            meetingList.remove(meeting);
-        }
+        meetingList.remove(meeting);
     }
 
     public int countMeeting() {

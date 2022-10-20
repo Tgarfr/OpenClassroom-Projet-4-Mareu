@@ -45,9 +45,9 @@ public class MeetingListRecyclerViewAdapter extends RecyclerView.Adapter<Meeting
         Meeting meeting = meetingRepository.getMeetingList().get(position);
 
         if (meeting.getBeginDate().getTimeInMillis() < Calendar.getInstance().getTimeInMillis()) {
-            holder.meetingCircleLayout.setColorFilter(ContextCompat.getColor(context, R.color.meetingListRedCircle));
+            holder.meetingCircleLayout.setColorFilter(ContextCompat.getColor(context, R.color.meeting_list_red_circle));
         } else {
-            holder.meetingCircleLayout.setColorFilter(ContextCompat.getColor(context, R.color.meetingListGreenCircle));
+            holder.meetingCircleLayout.setColorFilter(ContextCompat.getColor(context, R.color.meeting_list_green_circle));
         }
 
         final String hourDisplay = new SimpleDateFormat("HH:mm", locale).format(meeting.getBeginDate().getTimeInMillis());

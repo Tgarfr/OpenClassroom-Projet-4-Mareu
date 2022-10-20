@@ -13,6 +13,6 @@
         android:id="@+id/dialog_hour_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="OK" />
+        android:text="@string/dialog_ok" />
 
 </LinearLayout>

@@ -2,7 +2,7 @@ package com.example.mareu.model;
 
 public class Room {
 
-    private int id;
+    private final int id;
     private String name;
 
     public Room(int id, String name) {

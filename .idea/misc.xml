@@ -9,8 +9,8 @@
         <entry key="app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_filter_list_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_add_meeting.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_list_meeting.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/activity_add_meeting.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_list_meeting.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/dialog_calendar.xml" value="0.1" />
         <entry key="app/src/main/res/layout/dialog_contributor.xml" value="0.1765625" />
@@ -21,7 +21,7 @@
         <entry key="app/src/main/res/layout/item_dialog_contributor.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_dialog_contributor_list.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_dialog_participant_list.xml" value="0.28177083333333336" />
-        <entry key="app/src/main/res/layout/item_list_meeting.xml" value="0.203125" />
+        <entry key="app/src/main/res/layout/item_list_meeting.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_meeting.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_room_spinner_add_meeting.xml" value="0.20208333333333334" />
         <entry key="app/src/main/res/layout/menu.xml" value="0.1" />
@@ -38,7 +38,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.1765625" />
+        <option name="scale" value="0.1" />
       </ProjectState>
     </option>
   </component>
