@@ -151,8 +151,8 @@ public class MeetingAddActivity extends AppCompatActivity implements DateDialogF
     @Override
     public void onClick(View view) {
         if (view == beginTimeDateView) {
-                DateDialogFragment dateDialogFragment =  new DateDialogFragment(beginTime.get(Calendar.DAY_OF_MONTH), beginTime.get(Calendar.MONTH), beginTime.get(Calendar.YEAR));
-                dateDialogFragment.show(getSupportFragmentManager(),"Calendrier");
+            DateDialogFragment dateDialogFragment =  new DateDialogFragment(beginTime.get(Calendar.DAY_OF_MONTH), beginTime.get(Calendar.MONTH), beginTime.get(Calendar.YEAR));
+            dateDialogFragment.show(getSupportFragmentManager(),"Calendrier");
         } else if (view == beginTimeHourView) {
             HourDialogFragment hourDialogFragment = new HourDialogFragment(beginTime.get(Calendar.HOUR_OF_DAY), beginTime.get(Calendar.MINUTE), HourDialogFragment.Tag.BEGINHOUR);
             hourDialogFragment.show(getSupportFragmentManager(), "Hour");
