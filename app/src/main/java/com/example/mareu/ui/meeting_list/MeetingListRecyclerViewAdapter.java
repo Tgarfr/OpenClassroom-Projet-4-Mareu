@@ -59,7 +59,7 @@ public class MeetingListRecyclerViewAdapter extends RecyclerView.Adapter<Meeting
             @Override
             public void onClick(View view) {
                 meetingRepository.deleteMeeting(meetingRepository.getMeetingList().get(position));
-                notifyItemRemoved(position);
+                notifyDataSetChanged();
             }
         });
     }
