@@ -1,20 +1,11 @@
 package com.example.mareu;
 
 
-import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
-import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
-import static androidx.test.espresso.matcher.ViewMatchers.withParent;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
-
-import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-
-import android.widget.CalendarView;
-import android.widget.DatePicker;
 
 import androidx.test.espresso.contrib.PickerActions;
 import androidx.test.espresso.matcher.ViewMatchers;
@@ -22,23 +13,16 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.example.mareu.model.Meeting;
-import com.example.mareu.model.Participant;
-import com.example.mareu.model.Room;
 import com.example.mareu.repository.MeetingRepository;
-import com.example.mareu.ui.meeting_add.MeetingAddActivity;
 import com.example.mareu.ui.meeting_list.MeetingListActivity;
-import com.example.mareu.utils.RecyclerViewItemAssertion;
+import com.example.mareu.utils.FakeMeeting;
 
-import org.hamcrest.Matchers;
-import org.hamcrest.core.AllOf;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 public class MeetingAddTest {
@@ -46,7 +30,7 @@ public class MeetingAddTest {
     private MeetingRepository meetingRepository;
 
     @Rule
-    public ActivityScenarioRule<MeetingListActivity> activityScenarioRule = new ActivityScenarioRule<MeetingListActivity> (MeetingListActivity.class);
+    public ActivityScenarioRule<MeetingListActivity> activityScenarioRule = new ActivityScenarioRule<MeetingListActivity>(MeetingListActivity.class);
 
     @Before
     public void setUp() {
@@ -56,7 +40,7 @@ public class MeetingAddTest {
     @Test
     public void meetingAddTest_check() {
         // Given
-        Meeting expectedMeeting = getFakeMeeting();
+        Meeting expectedMeeting = FakeMeeting.getFakeMeeting();
 
         // When
         onView(ViewMatchers.withId(R.id.add_meeting_button)).perform(click());
@@ -109,20 +93,4 @@ public class MeetingAddTest {
         }
         assertTrue(foundMeeting);
     }
-
-    private Meeting getFakeMeeting() {
-        String name = "Meeting Name Test";
-        Calendar beginDate = Calendar.getInstance();
-        Calendar endDate = Calendar.getInstance();
-        endDate.add(Calendar.MINUTE, 45);
-        Room room = new Room(3, "Salle 3");
-        List<Participant> participantList = new ArrayList<Participant>();
-        participantList.add(new Participant("test@yahoo.fr"));
-        participantList.add(new Participant("test2@google.fr"));
-        participantList.add(new Participant("test3@laposte.net"));
-        return new Meeting(0L, name, beginDate, endDate, room, participantList);
-    }
-
-
-
 }

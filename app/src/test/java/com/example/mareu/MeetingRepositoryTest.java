@@ -3,8 +3,6 @@ package com.example.mareu;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import android.util.Log;
-
 import com.example.mareu.model.Meeting;
 import com.example.mareu.model.Participant;
 import com.example.mareu.model.Room;
