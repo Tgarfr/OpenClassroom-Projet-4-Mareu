@@ -68,4 +68,8 @@ public class MeetingRepository {
         };
         Collections.sort(meetingList,comparator);
     }
+
+    public void clearList() {
+        meetingList.clear();
+    }
 }
