@@ -12,17 +12,16 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.mareu.R;
 
+import java.util.Calendar;
+
 public class HourDialogFragment extends DialogFragment {
 
-    TimePicker timePicker;
+    public enum Tag { BEGINHOUR, ENDHOUR };
+
+    private TimePicker timePickerView;
     private int hourOfDay;
     private int minute;
-    public enum Tag { BEGINHOUR, ENDHOUR };
     private final Tag tag;
-
-    interface ValidHourDialogListener {
-        void getHourDialogFragment(int hourOfDay, int minute, Tag tag);
-    }
 
     public HourDialogFragment(int hourOfDay, int minute, Tag tag) {
         this.hourOfDay = hourOfDay;
@@ -36,12 +35,12 @@ public class HourDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         View view = getLayoutInflater().inflate(R.layout.dialog_hour, null);
-        timePicker = view.findViewById(R.id.dialog_hour);
-        timePicker.setIs24HourView(true);
+        timePickerView = view.findViewById(R.id.dialog_hour);
+        timePickerView.setIs24HourView(true);
         Button validateButton = view.findViewById(R.id.dialog_hour_button);
         setHourToTimePicker();
 
-        timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+        timePickerView.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker timePickerView, int timePikerHourOfDay, int timePikerminute) {
                 hourOfDay = timePikerHourOfDay;
@@ -51,8 +50,7 @@ public class HourDialogFragment extends DialogFragment {
         validateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ValidHourDialogListener listener = (ValidHourDialogListener) getActivity();
-                listener.getHourDialogFragment(hourOfDay, minute, tag);
+                returHourToParentFragment();
                 dismiss();
             }
         });
@@ -61,14 +59,30 @@ public class HourDialogFragment extends DialogFragment {
         return builder.create();
     }
 
-    public void setHourToTimePicker() {
+    private void setHourToTimePicker() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            timePicker.setHour(hourOfDay);
-            timePicker.setMinute(minute);
+            timePickerView.setHour(hourOfDay);
+            timePickerView.setMinute(minute);
         }
         else {
-            timePicker.setCurrentHour(hourOfDay);
-            timePicker.setCurrentMinute(minute);
+            timePickerView.setCurrentHour(hourOfDay);
+            timePickerView.setCurrentMinute(minute);
+        }
+    }
+
+    private void returHourToParentFragment() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        calendar.set(Calendar.MINUTE, minute);
+
+        Bundle bundle = new Bundle();
+        bundle.putLong("calendar", calendar.getTimeInMillis());
+
+        if (tag == Tag.BEGINHOUR) {
+            getParentFragmentManager().setFragmentResult("meetingAddBeginHour", bundle);
+        }
+        else if (tag == Tag.ENDHOUR) {
+            getParentFragmentManager().setFragmentResult("meetingAddEnHour", bundle);
         }
     }
 }

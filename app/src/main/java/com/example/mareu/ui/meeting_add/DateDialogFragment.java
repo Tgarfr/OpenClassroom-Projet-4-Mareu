@@ -15,14 +15,10 @@ import java.util.Calendar;
 
 public class DateDialogFragment extends DialogFragment {
 
-    DatePicker datePickerView;
-    private int dayOfMonth;
-    private int month;
-    private int year;
-
-    interface ValidDateDialogListener {
-        void getDateDialogFragment(int dayOfMonth, int month, int year);
-    }
+    private DatePicker datePickerView;
+    private final int dayOfMonth;
+    private final int month;
+    private final int year;
 
     public DateDialogFragment(int dayOfMonth, int month, int year) {
         this.dayOfMonth = dayOfMonth;
@@ -43,12 +39,7 @@ public class DateDialogFragment extends DialogFragment {
         validateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dayOfMonth = datePickerView.getDayOfMonth();
-                month = datePickerView.getMonth()+1;
-                year = datePickerView.getYear();
-
-                ValidDateDialogListener listener = (ValidDateDialogListener) getActivity();
-                listener.getDateDialogFragment(dayOfMonth, month, year);
+                returDateToParentFragment();
                 dismiss();
             }
         });
@@ -57,11 +48,22 @@ public class DateDialogFragment extends DialogFragment {
         return builder.create();
     }
 
-    public void setDateToCalendarView() {
+    private void setDateToCalendarView() {
         Calendar date = Calendar.getInstance();
         date.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         date.set(Calendar.MONTH, month);
         date.set(Calendar.YEAR, year);
         datePickerView.updateDate(year, month, dayOfMonth);
+    }
+
+    private void returDateToParentFragment() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, datePickerView.getDayOfMonth());
+        calendar.set(Calendar.MONTH, datePickerView.getMonth()+1);
+        calendar.set(Calendar.YEAR, datePickerView.getYear());
+
+        Bundle bundle = new Bundle();
+        bundle.putLong("calendar", calendar.getTimeInMillis());
+        getParentFragmentManager().setFragmentResult("meetingAddDate", bundle);
     }
 }

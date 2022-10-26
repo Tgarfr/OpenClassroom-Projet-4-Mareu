@@ -12,7 +12,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.example.mareu.model.Meeting;
 import com.example.mareu.repository.MeetingRepository;
-import com.example.mareu.ui.meeting_list.MeetingListActivity;
+import com.example.mareu.ui.MainActivity;
+import com.example.mareu.ui.meeting_list.MeetingListFragment;
 import com.example.mareu.utils.FakeMeeting;
 import com.example.mareu.utils.RecyclerViewItemAssertion;
 
@@ -27,7 +28,7 @@ public class MeetingListTest {
     private MeetingRepository meetingRepository;
 
     @Rule
-    public ActivityScenarioRule<MeetingListActivity> activityScenarioRule = new ActivityScenarioRule<MeetingListActivity> (MeetingListActivity.class);
+    public ActivityScenarioRule<MainActivity> activityScenarioRule = new ActivityScenarioRule<MainActivity> (MainActivity.class);
 
     @Before
     public void setUp() {

@@ -9,6 +9,10 @@
         <entry key="app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_filter_list_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="app/src/main/res/layout-land/activity_main.xml" value="0.22369791666666666" />
+        <entry key="app/src/main/res/layout-land/config.xml" value="0.13385416666666666" />
+        <entry key="app/src/main/res/layout-land/fragment_list_meeting,xml.xml" value="0.13385416666666666" />
+        <entry key="app/src/main/res/layout-land/fragment_list_meeting.xml" value="0.14375" />
         <entry key="app/src/main/res/layout/activity_add_meeting.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_list_meeting.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
@@ -17,6 +21,7 @@
         <entry key="app/src/main/res/layout/dialog_contributor_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/dialog_hour.xml" value="0.1" />
         <entry key="app/src/main/res/layout/dialog_participant_list.xml" value="0.21145833333333333" />
+        <entry key="app/src/main/res/layout/fragment_add_meeting.xml" value="0.13489583333333333" />
         <entry key="app/src/main/res/layout/fragment_list_meeting.xml" value="0.2388888888888889" />
         <entry key="app/src/main/res/layout/item_dialog_contributor.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_dialog_contributor_list.xml" value="0.33" />
@@ -25,6 +30,7 @@
         <entry key="app/src/main/res/layout/item_meeting.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_room_spinner_add_meeting.xml" value="0.20208333333333334" />
         <entry key="app/src/main/res/layout/menu.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/sliding_pane_layout.xml" value="0.13880208333333333" />
         <entry key="app/src/main/res/menu/menu.xml" value="0.1" />
       </map>
     </option>

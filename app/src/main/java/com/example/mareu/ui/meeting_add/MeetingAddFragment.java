@@ -1,7 +1,9 @@
 package com.example.mareu.ui.meeting_add;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,7 +11,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 
 import com.example.mareu.R;
 import com.example.mareu.model.Participant;
@@ -22,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class MeetingAddActivity extends AppCompatActivity implements DateDialogFragment.ValidDateDialogListener, HourDialogFragment.ValidHourDialogListener, View.OnClickListener {
+public class MeetingAddFragment extends Fragment implements View.OnClickListener {
 
     private String name;
     private Calendar beginTime;
@@ -30,6 +35,7 @@ public class MeetingAddActivity extends AppCompatActivity implements DateDialogF
     private Room room;
     private List<Participant> participantList;
 
+    private View view;
     private EditText nameView;
     private Button beginTimeDateView;
     private Button beginTimeHourView;
@@ -41,7 +47,7 @@ public class MeetingAddActivity extends AppCompatActivity implements DateDialogF
     private Button participantAddView;
     private Button validButtonView;
 
-    public MeetingAddActivity() {
+    public MeetingAddFragment() {
         name = null;
         beginTime = Calendar.getInstance();
         endTime = Calendar.getInstance();
@@ -50,30 +56,74 @@ public class MeetingAddActivity extends AppCompatActivity implements DateDialogF
         participantList = new ArrayList<Participant>();
     }
 
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_meeting);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_add_meeting, container, false);
         initLayout();
         setDataToViews();
+
+        getParentFragmentManager().setFragmentResultListener("meetingAddDate", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
+                Long timeInMillis = bundle.getLong("calendar");
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(timeInMillis);
+
+                beginTime.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
+                beginTime.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
+                beginTime.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH));
+                beginTimeDateViewRefresh();
+            }
+        });
+        getParentFragmentManager().setFragmentResultListener("meetingAddBeginHour", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
+                Long timeInMillis = bundle.getLong("calendar");
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(timeInMillis);
+
+                beginTime.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY));
+                beginTime.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
+                beginTimeHourViewRefresh();
+                calendar.add(Calendar.MINUTE, 45);
+                endTime.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY));
+                endTime.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
+                endTimeHourViewRefresh();
+            }
+        });
+        getParentFragmentManager().setFragmentResultListener("meetingAddEndHour", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
+                Long timeInMillis = bundle.getLong("calendar");
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(timeInMillis);
+
+                endTime.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY));
+                endTime.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
+                endTimeHourViewRefresh();
+            }
+        });
+
+        return view;
     }
 
     private void initLayout() {
-        nameView = findViewById(R.id.add_meeting_name);
-        beginTimeDateView = findViewById(R.id.add_meeting_date_button);
+        nameView = view.findViewById(R.id.add_meeting_name);
+        beginTimeDateView = view.findViewById(R.id.add_meeting_date_button);
         beginTimeDateView.setOnClickListener(this);
-        beginTimeHourView = findViewById(R.id.add_meeting_hour_button);
+        beginTimeHourView = view.findViewById(R.id.add_meeting_hour_button);
         beginTimeHourView.setOnClickListener(this);
-        endTimeHourView = findViewById(R.id.add_meeting_endTime_button);
+        endTimeHourView = view.findViewById(R.id.add_meeting_endTime_button);
         endTimeHourView.setOnClickListener(this);
-        roomView = findViewById(R.id.add_meeting_room_spinner);
-        participantTitleView = findViewById(R.id.add_meeting_participant_title);
-        participantListView = findViewById(R.id.add_meeting_participant_list_button);
+        roomView = view.findViewById(R.id.add_meeting_room_spinner);
+        participantTitleView = view.findViewById(R.id.add_meeting_participant_title);
+        participantListView = view.findViewById(R.id.add_meeting_participant_list_button);
         participantListView.setOnClickListener(this);
-        participantEditTextView = findViewById(R.id.add_meeting_participant_add_EditText);
-        participantAddView = findViewById(R.id.add_meeting_participant_add_button);
+        participantEditTextView = view.findViewById(R.id.add_meeting_participant_add_EditText);
+        participantAddView = view.findViewById(R.id.add_meeting_participant_add_button);
         participantAddView.setOnClickListener(this);
-        validButtonView = findViewById(R.id.add_meeting_valid_button);
+        validButtonView = view.findViewById(R.id.add_meeting_valid_button);
         validButtonView.setOnClickListener(this);
         roomSpinnerDisplay();
     }
@@ -124,48 +174,23 @@ public class MeetingAddActivity extends AppCompatActivity implements DateDialogF
     }
 
     @Override
-    public void getDateDialogFragment(int dayOfMonth, int month, int year) {
-        beginTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        beginTime.set(Calendar.MONTH, month);
-        beginTime.set(Calendar.YEAR, year);
-        beginTimeDateViewRefresh();
-    }
-
-    @Override
-    public void getHourDialogFragment(int hourOfDay, int minute, HourDialogFragment.Tag tag) {
-        if (tag == HourDialogFragment.Tag.BEGINHOUR) {
-            beginTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
-            beginTime.set(Calendar.MINUTE, minute);
-            beginTimeHourViewRefresh();
-            endTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
-            endTime.set(Calendar.MINUTE, minute+45);
-            endTimeHourViewRefresh();
-        }
-        else if (tag == HourDialogFragment.Tag.ENDHOUR) {
-            endTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
-            endTime.set(Calendar.MINUTE, minute);
-            endTimeHourViewRefresh();
-        }
-    }
-
-    @Override
     public void onClick(View view) {
         if (view == beginTimeDateView) {
             DateDialogFragment dateDialogFragment =  new DateDialogFragment(beginTime.get(Calendar.DAY_OF_MONTH), beginTime.get(Calendar.MONTH), beginTime.get(Calendar.YEAR));
-            dateDialogFragment.show(getSupportFragmentManager(),"Calendrier");
+            dateDialogFragment.show(this.getParentFragmentManager(),"Calendrier");
         } else if (view == beginTimeHourView) {
             HourDialogFragment hourDialogFragment = new HourDialogFragment(beginTime.get(Calendar.HOUR_OF_DAY), beginTime.get(Calendar.MINUTE), HourDialogFragment.Tag.BEGINHOUR);
-            hourDialogFragment.show(getSupportFragmentManager(), "Hour");
+            hourDialogFragment.show(this.getParentFragmentManager(), "Hour");
         } else if (view == endTimeHourView) {
             HourDialogFragment hourDialogFragment = new HourDialogFragment(endTime.get(Calendar.HOUR_OF_DAY), endTime.get(Calendar.MINUTE), HourDialogFragment.Tag.ENDHOUR);
-            hourDialogFragment.show(getSupportFragmentManager(), "EndTime");
+            hourDialogFragment.show(this.getParentFragmentManager(), "EndTime");
         } else if (view == participantListView) {
             ParticipantListDialogFragment contributorListDialogFragment = new ParticipantListDialogFragment(participantList);
-            contributorListDialogFragment.show(getSupportFragmentManager(), "EndTime");
+            contributorListDialogFragment.show(this.getParentFragmentManager(), "EndTime");
         } else if (view == participantAddView) {
             String newParticipant = participantEditTextView.getText().toString();
             if (newParticipant.equals("")) {
-                Toast.makeText(getApplicationContext(), "Merci d'indiquer une adresse email", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Merci d'indiquer une adresse email", Toast.LENGTH_SHORT).show();
             } else {
                 Participant participantAdd = new Participant(newParticipant);
                 participantList.add(participantAdd);
@@ -181,15 +206,24 @@ public class MeetingAddActivity extends AppCompatActivity implements DateDialogF
         MeetingRepository meetingRepository = MeetingRepository.getInstance();
         name = nameView.getText().toString();
         if (name == "") {
-            Toast.makeText(getApplicationContext(), "Merci d'indiquer un nom de réunion'", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Merci d'indiquer un nom de réunion'", Toast.LENGTH_SHORT).show();
         } else if (room == null) {
-            Toast.makeText(getApplicationContext(), "Merci de selectionner une salle", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Merci de selectionner une salle", Toast.LENGTH_SHORT).show();
         } else if (participantList.size() == 0) {
-            Toast.makeText(getApplicationContext(), "Merci d'ajouter des participants", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Merci d'ajouter des participants", Toast.LENGTH_SHORT).show();
         } else {
             meetingRepository.addMeeting(name, beginTime, endTime, room, participantList);
-            Toast.makeText(getApplicationContext(), "Nouvelle réunion ajouté", Toast.LENGTH_SHORT).show();
-            finish();
+            Toast.makeText(getActivity(), "Nouvelle réunion ajouté", Toast.LENGTH_SHORT).show();
+
+            if (getResources().getBoolean(R.bool.landscapeMode)) {
+                getParentFragmentManager().setFragmentResult("refreshMeetingList", null);
+            }
+            else {
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.activity_main_fragment_1, MeetingAddFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .commit();
+            }
         }
     }
 }
