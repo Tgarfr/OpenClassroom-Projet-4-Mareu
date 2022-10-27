@@ -4,6 +4,9 @@ package com.example.mareu;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -15,9 +18,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.example.mareu.model.Meeting;
 import com.example.mareu.repository.MeetingRepository;
 import com.example.mareu.ui.MainActivity;
-import com.example.mareu.ui.meeting_list.MeetingListFragment;
 import com.example.mareu.utils.FakeMeeting;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -44,35 +45,37 @@ public class MeetingAddTest {
         // Given
         Meeting expectedMeeting = FakeMeeting.getFakeMeeting();
 
-        onView(ViewMatchers.withId(R.id.add_meeting_button)).perform(click());
+        if(viewExists(R.id.add_meeting_button)) {
+            onView(withId(R.id.add_meeting_button)).perform(click());
+        }
 
-        onView(ViewMatchers.withId(R.id.add_meeting_name))
+        onView(withId(R.id.add_meeting_name))
                 .perform(replaceText(expectedMeeting.getName()));
 
-        onView(ViewMatchers.withId(R.id.add_meeting_date_button)).perform(click());
-        onView(ViewMatchers.withId(R.id.dialog_date_picker))
+        onView(withId(R.id.add_meeting_date_button)).perform(click());
+        onView(withId(R.id.dialog_date_picker))
                 .perform(PickerActions.setDate(expectedMeeting.getBeginDate().get(Calendar.YEAR), expectedMeeting.getBeginDate().get(Calendar.MONTH), expectedMeeting.getBeginDate().get(Calendar.DAY_OF_MONTH)));
-        onView(ViewMatchers.withId(R.id.dialog_date_button)).perform(click());
+        onView(withId(R.id.dialog_date_button)).perform(click());
 
-        onView(ViewMatchers.withId(R.id.add_meeting_hour_button)).perform(click());
-        onView(ViewMatchers.withId(R.id.dialog_hour))
+        onView(withId(R.id.add_meeting_hour_button)).perform(click());
+        onView(withId(R.id.dialog_hour))
                 .perform(PickerActions.setTime(expectedMeeting.getBeginDate().get(Calendar.HOUR_OF_DAY), expectedMeeting.getBeginDate().get(Calendar.MINUTE)));
-        onView(ViewMatchers.withId(R.id.dialog_hour_button)).perform(click());
+        onView(withId(R.id.dialog_hour_button)).perform(click());
 
-        onView(ViewMatchers.withId(R.id.add_meeting_endTime_button)).perform(click());
-        onView(ViewMatchers.withId(R.id.dialog_hour))
+        onView(withId(R.id.add_meeting_endTime_button)).perform(click());
+        onView(withId(R.id.dialog_hour))
                 .perform(PickerActions.setTime(expectedMeeting.getEndDate().get(Calendar.HOUR_OF_DAY), expectedMeeting.getEndDate().get(Calendar.MINUTE)));
-        onView(ViewMatchers.withId(R.id.dialog_hour_button)).perform(click());
+        onView(withId(R.id.dialog_hour_button)).perform(click());
 
-        onView(ViewMatchers.withId(R.id.add_meeting_room_spinner)).perform(click());
+        onView(withId(R.id.add_meeting_room_spinner)).perform(click());
         onView(ViewMatchers.withText(expectedMeeting.getRoom().getName())).perform(click());
 
         for (int i = 0; i < expectedMeeting.getParticipantList().size(); i++) {
-            onView(ViewMatchers.withId(R.id.add_meeting_participant_add_EditText)).perform(replaceText(expectedMeeting.getParticipantList().get(i).getEmail()));
-            onView(ViewMatchers.withId(R.id.add_meeting_participant_add_button)).perform(click());
+            onView(withId(R.id.add_meeting_participant_add_EditText)).perform(replaceText(expectedMeeting.getParticipantList().get(i).getEmail()));
+            onView(withId(R.id.add_meeting_participant_add_button)).perform(click());
         }
 
-        onView(ViewMatchers.withId(R.id.add_meeting_valid_button)).perform(click());
+        onView(withId(R.id.add_meeting_valid_button)).perform(click());
 
         // Then
         Boolean foundMeeting = false;
@@ -93,5 +96,14 @@ public class MeetingAddTest {
             }
         }
         assertTrue(foundMeeting);
+    }
+
+    private boolean viewExists(int idView) {
+        try {
+            onView(withId(idView)).check(matches(isDisplayed()));
+            return true;
+        } catch (RuntimeException e) {
+            return false;
+        }
     }
 }
