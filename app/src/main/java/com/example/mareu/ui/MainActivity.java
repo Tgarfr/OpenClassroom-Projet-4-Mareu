@@ -6,11 +6,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.example.mareu.R;
 import com.example.mareu.model.Participant;
 import com.example.mareu.repository.MeetingRepository;
 import com.example.mareu.repository.RoomRepository;
+import com.example.mareu.ui.meeting_add.MeetingAddFragment;
+import com.example.mareu.ui.meeting_list.MeetingListFragment;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -67,5 +70,16 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().setFragmentResult("refreshMeetingList", null);
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.activity_main_fragment_1);
+        if (fragment instanceof MeetingAddFragment) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.activity_main_fragment_1, MeetingListFragment.class, null)
+                    .setReorderingAllowed(true)
+                    .commit();
+        }
     }
 }

@@ -18,6 +18,7 @@ import com.example.mareu.model.Participant;
 import com.example.mareu.model.Room;
 import com.example.mareu.repository.MeetingRepository;
 import com.example.mareu.repository.RoomRepository;
+import com.example.mareu.ui.meeting_list.MeetingListFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -226,7 +227,7 @@ public class MeetingAddFragment extends Fragment  {
             }
             else {
                 getParentFragmentManager().beginTransaction()
-                        .replace(R.id.activity_main_fragment_1, MeetingAddFragment.class, null)
+                        .replace(R.id.activity_main_fragment_1, MeetingListFragment.class, null)
                         .setReorderingAllowed(true)
                         .commit();
             }
