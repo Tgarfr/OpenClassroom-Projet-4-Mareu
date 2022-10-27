@@ -13,7 +13,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.example.mareu.model.Meeting;
 import com.example.mareu.repository.MeetingRepository;
 import com.example.mareu.ui.MainActivity;
-import com.example.mareu.ui.meeting_list.MeetingListFragment;
 import com.example.mareu.utils.FakeMeeting;
 import com.example.mareu.utils.RecyclerViewItemAssertion;
 
@@ -34,10 +33,10 @@ public class MeetingListTest {
     public void setUp() {
         meetingRepository = MeetingRepository.getInstance();
         Meeting fakeMeeting = FakeMeeting.getFakeMeeting();
-        meetingRepository.addMeeting(fakeMeeting.getName(), fakeMeeting.getBeginDate(), fakeMeeting.getEndDate(), fakeMeeting.getRoom(), fakeMeeting.getParticipantList());
-        meetingRepository.addMeeting(fakeMeeting.getName(), fakeMeeting.getBeginDate(), fakeMeeting.getEndDate(), fakeMeeting.getRoom(), fakeMeeting.getParticipantList());
-        meetingRepository.addMeeting(fakeMeeting.getName(), fakeMeeting.getBeginDate(), fakeMeeting.getEndDate(), fakeMeeting.getRoom(), fakeMeeting.getParticipantList());
-        meetingRepository.addMeeting(fakeMeeting.getName(), fakeMeeting.getBeginDate(), fakeMeeting.getEndDate(), fakeMeeting.getRoom(), fakeMeeting.getParticipantList());
+
+        for (int i = 0; i < 4 ; i++) {
+            meetingRepository.addMeeting(fakeMeeting.getName(), fakeMeeting.getBeginDate(), fakeMeeting.getEndDate(), fakeMeeting.getRoom(), fakeMeeting.getParticipantList());
+        }
     }
 
     @Test
