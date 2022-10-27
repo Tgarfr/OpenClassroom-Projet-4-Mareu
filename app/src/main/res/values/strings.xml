@@ -11,6 +11,7 @@
     <string name="meeting_add_participant">Participants : </string>
     <string name="meeting_add_participant_list">Liste des participants</string>
     <string name="meeting_add_add">AJOUT</string>
+    <string name="meeting_add_email_false">Merci d\'indiquer une adresse email valide</string>
     <string name="meeting_add_validate">AJOUTER</string>
     <string name="meeting_add_date">20-10-2022</string>
     <string name="meeting_add_beginHour">16:20</string>

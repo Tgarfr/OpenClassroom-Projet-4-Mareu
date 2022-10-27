@@ -189,17 +189,26 @@ public class MeetingAddFragment extends Fragment  {
 
     private void participantAddButtonClick() {
         String newParticipant = participantEditText.getText().toString();
-        if (newParticipant.equals("")) {
-            Toast.makeText(getActivity(), "Merci d'indiquer une adresse email", Toast.LENGTH_SHORT).show();
+        if (!verifyEmail(newParticipant)) {
+            Toast.makeText(getActivity(), R.string.meeting_add_email_false, Toast.LENGTH_SHORT).show();
         } else {
             Participant participantAdd = new Participant(newParticipant);
             meetingParticipantList.add(participantAdd);
             participantCountViewRefresh();
+            participantEditText.setText(null);
         }
-        participantEditText.setText(null);
     }
 
-    public void addNewMeetingToRepository() {
+    private boolean verifyEmail(String email) {
+        String emailPattern = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\\.[a-zA-Z0-9]+$";
+        if (email.matches(emailPattern)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void addNewMeetingToRepository() {
         MeetingRepository meetingRepository = MeetingRepository.getInstance();
         meetingName = nameEditText.getText().toString();
         if (meetingName.equals("")) {
