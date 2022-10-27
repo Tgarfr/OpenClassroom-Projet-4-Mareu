@@ -45,11 +45,6 @@ public class MeetingRepositoryTest {
         assertEquals(expectedMeeting.getEndDate(), actualMeeting.getEndDate());
         assertEquals(expectedMeeting.getRoom(), actualMeeting.getRoom());
         assertEquals(expectedMeeting.getParticipantList(), actualMeeting.getParticipantList());
-        for (int i = 0; i < meetingRepository.countMeeting(); i++) {
-            if (meetingRepository.getMeetingList().get(i).getName() == expectedMeeting.getName()) {
-                actualMeeting = meetingRepository.getMeetingList().get(i);
-            }
-        }
     }
 
     @Test
