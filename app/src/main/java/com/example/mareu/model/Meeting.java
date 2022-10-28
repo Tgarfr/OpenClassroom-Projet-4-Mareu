@@ -1,26 +1,27 @@
 package com.example.mareu.model;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.List;
 
 public class Meeting {
 
-    private int id;
+    private final Long id;
     private String name;
-    private Calendar date;
-    private int room;
+    private Calendar beginDate;
+    private Calendar endDate;
+    private Room room;
+    private List<Participant> participantList;
 
-    public Meeting(int id, String name, Calendar date, int room) {
+    public Meeting(Long id, String name, Calendar beginDate, Calendar endDate, Room room, List<Participant> participantList) {
         this.id = id;
         this.name = name;
-        this.date = date;
+        this.beginDate = beginDate;
+        this.endDate =  endDate;
         this.room = room;
+        this.participantList = participantList;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -28,23 +29,39 @@ public class Meeting {
         return name;
     }
 
-    public Calendar getDate() {
-        return date;
+    public Calendar getBeginDate() {
+        return beginDate;
     }
 
-    public int getRoom() {
+    public Calendar getEndDate() {
+        return endDate;
+    }
+
+    public Room getRoom() {
         return room;
+    }
+
+    public List<Participant> getParticipantList() {
+        return participantList;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setDate(Calendar date) {
-        this.date = date;
+    public void setBeginDate(Calendar beginDate) {
+        this.beginDate = beginDate;
     }
 
-    public void setRoom(int room) {
+    public void setEndDate(Calendar endDate) {
+        this.endDate = endDate;
+    }
+
+    public void setRoom(Room room) {
         this.room = room;
+    }
+
+    public void setParticipantList(List<Participant> participantList) {
+        this.participantList = participantList;
     }
 }
