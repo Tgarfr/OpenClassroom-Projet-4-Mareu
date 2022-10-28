@@ -70,7 +70,7 @@ public class MeetingRepositoryTest {
 
 
     @Test
-    public void sortByDate() {
+    public void filterByDate() {
         // Arrange
         Meeting fakeMeeting = getFakeMeeting();
         Calendar january = Calendar.getInstance();
@@ -90,16 +90,16 @@ public class MeetingRepositoryTest {
         meetingRepository.addMeeting("February meeting", february, fakeMeeting.getEndDate(), fakeMeeting.getRoom(), fakeMeeting.getParticipantList());
 
         // Act
-        meetingRepository.sortByDate();
+        List<Meeting> meetingFilterList = meetingRepository.sortByDate();
 
         // Assert
-        for (int i = 0; i < meetingRepository.countMeeting()-1; i++) {
-            assertTrue(meetingRepository.getMeetingList().get(i).getBeginDate().before(meetingRepository.getMeetingList().get(i+1).getBeginDate()));
+        for (int i = 0; i < meetingFilterList.size()-1; i++) {
+            assertTrue(meetingFilterList.get(i).getBeginDate().before(meetingFilterList.get(i+1).getBeginDate()));
         }
     }
 
     @Test
-    public void sortByRoom() {
+    public void filterByRoom() {
         // Arrange
         Meeting fakeMeeting = getFakeMeeting();
         meetingRepository.addMeeting("Room 0 meeting", fakeMeeting.getBeginDate(), fakeMeeting.getEndDate(), new Room(0, "Room 0"), fakeMeeting.getParticipantList());
@@ -109,11 +109,11 @@ public class MeetingRepositoryTest {
         meetingRepository.addMeeting("Room 3 meeting", fakeMeeting.getBeginDate(), fakeMeeting.getEndDate(), new Room(3, "Room 3"), fakeMeeting.getParticipantList());
 
         // Act
-        meetingRepository.sortByRoom();
+        List<Meeting> meetingFilterList = meetingRepository.sortByRoom();
 
         // Assert
         for (int i = 0; i < meetingRepository.countMeeting()-1; i++) {
-            assertTrue(meetingRepository.getMeetingList().get(i).getRoom().getId() <= meetingRepository.getMeetingList().get(i+1).getRoom().getId());
+            assertTrue(meetingFilterList.get(i).getRoom().getId() <= meetingFilterList.get(i+1).getRoom().getId());
         }
     }
 
