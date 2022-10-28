@@ -24,11 +24,13 @@ import java.util.Locale;
 public class MeetingListRecyclerViewAdapter extends RecyclerView.Adapter<MeetingListRecyclerViewAdapter.ViewHolder> {
 
     MeetingRepository meetingRepository;
+    List<Meeting> displayMeetingList;
     Locale locale;
     Context context;
 
     public MeetingListRecyclerViewAdapter(MeetingRepository meetingRepository, Context context, Locale locale) {
         this.meetingRepository = meetingRepository;
+        this.displayMeetingList = meetingRepository.getMeetingList();
         this.context = context;
         this.locale = locale;
     }
@@ -42,7 +44,7 @@ public class MeetingListRecyclerViewAdapter extends RecyclerView.Adapter<Meeting
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Meeting meeting = meetingRepository.getMeetingList().get(position);
+        Meeting meeting = displayMeetingList.get(position);
 
         if (meeting.getBeginDate().getTimeInMillis() < Calendar.getInstance().getTimeInMillis()) {
             holder.meetingCircleLayout.setColorFilter(ContextCompat.getColor(context, R.color.meeting_list_red_circle));
@@ -58,15 +60,16 @@ public class MeetingListRecyclerViewAdapter extends RecyclerView.Adapter<Meeting
         holder.meetingDeleteButtonLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                meetingRepository.deleteMeeting(meetingRepository.getMeetingList().get(position));
-                notifyDataSetChanged();
+                meetingRepository.deleteMeeting(meeting);
+                displayMeetingList.remove(meeting);
+                notifyItemRemoved(position);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return meetingRepository.countMeeting();
+        return displayMeetingList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -87,5 +90,15 @@ public class MeetingListRecyclerViewAdapter extends RecyclerView.Adapter<Meeting
             participantEmailListDiplay = participantEmailListDiplay+", "+participantList.get(i).getEmail();
         }
         return participantEmailListDiplay;
+    }
+
+    public void filterByDate() {
+        displayMeetingList = meetingRepository.sortByDate();
+        notifyDataSetChanged();
+    }
+
+    public void filterByRoom() {
+        displayMeetingList = meetingRepository.sortByRoom();
+        notifyDataSetChanged();
     }
 }

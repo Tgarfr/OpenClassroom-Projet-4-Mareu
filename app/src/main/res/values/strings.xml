@@ -29,7 +29,7 @@
     <string name="dialog_ok">OK</string>
 
     // option_menu
-    <string name="sort">Trier</string>
+    <string name="sort">Filtrer</string>
     <string name="by_date">Par date</string>
     <string name="by_room">Par lieu</string>
 
