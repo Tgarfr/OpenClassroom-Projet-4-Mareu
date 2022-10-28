@@ -13,6 +13,8 @@
         <entry key="app/src/main/res/layout-land/config.xml" value="0.13385416666666666" />
         <entry key="app/src/main/res/layout-land/fragment_list_meeting,xml.xml" value="0.13385416666666666" />
         <entry key="app/src/main/res/layout-land/fragment_list_meeting.xml" value="0.14375" />
+        <entry key="app/src/main/res/layout-large-land/activity_main.xml" value="0.17135416666666667" />
+        <entry key="app/src/main/res/layout-large-land/fragment_list_meeting.xml" value="0.24405250205086138" />
         <entry key="app/src/main/res/layout/activity_add_meeting.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_list_meeting.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />

@@ -1,20 +1,15 @@
 package com.example.mareu.ui.meeting_list;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.slidingpanelayout.widget.SlidingPaneLayout;
 
 import com.example.mareu.R;
 import com.example.mareu.repository.MeetingRepository;
@@ -59,8 +54,8 @@ public class MeetingListFragment extends Fragment {
 
     @Override
     public void onResume() {
-        super.onResume();
         recyclerView.getAdapter().notifyDataSetChanged();
+        super.onResume();
     }
 
     View.OnClickListener AddButtonClick = new View.OnClickListener() {

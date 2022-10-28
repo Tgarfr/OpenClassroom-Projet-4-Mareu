@@ -130,7 +130,7 @@ public class MeetingAddFragment extends Fragment  {
     }
 
     public void participantCountViewRefresh() {
-        participantTitleTextView.setText("Participants : "+ meetingParticipantList.size());
+        participantTitleTextView.setText(getString(R.string.meeting_add_participant_title, meetingParticipantList.size()));
     }
 
     private void getBeginDateFromDialog(Bundle bundle) {

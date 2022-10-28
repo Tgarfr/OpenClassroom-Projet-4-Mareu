@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
             meetingRepository.sortByRoom();
         }
 
-        Bundle result = new Bundle();
         getSupportFragmentManager().setFragmentResult("refreshMeetingList", null);
 
         return super.onOptionsItemSelected(item);

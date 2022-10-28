@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">Maréu</string>
-
+    <string name="app_name">Ma réu</string>
 
     // activity_add_meeting
     <string name="meeting_add_title">Titre de la réunion :</string>
@@ -8,6 +7,7 @@
     <string name="meeting_add_begintime">Début de la réunion :</string>
     <string name="meeting_add_endTime">Heure de fin :</string>
     <string name="meeting_add_room">Choisissez votre salle :</string>
+    <string name="meeting_add_participant_title">Participants :  %1$x</string>
     <string name="meeting_add_participant">Participants : </string>
     <string name="meeting_add_participant_list">Liste des participants</string>
     <string name="meeting_add_add">AJOUT</string>
@@ -23,7 +23,6 @@
     <string name="meeting_list_exemple_line1">Réunion - 14h00 - Peach</string>
     <string name="meeting_list_exemple_line2">toto@mail.com, tata@mail.fr</string>
     <string name="meeting_list_delete_image">Suprimer la réunion</string>
-
 
     // dialog_list_participant
     <string name="dialog_list_participant_email">E-mail</string>
