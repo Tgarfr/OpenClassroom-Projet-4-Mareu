@@ -9,14 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.mareu.R;
-import com.example.mareu.model.Participant;
 import com.example.mareu.repository.MeetingRepository;
-import com.example.mareu.repository.RoomRepository;
 import com.example.mareu.ui.meeting_add.MeetingAddFragment;
 import com.example.mareu.ui.meeting_list.MeetingListFragment;
-
-import java.util.Arrays;
-import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,25 +40,6 @@ public class MainActivity extends AppCompatActivity {
         }
         if (item.getItemId() == R.id.sort_by_room) {
             meetingRepository.sortByRoom();
-        }
-        if (item.getItemId() == R.id.sampleMeeting) {
-            RoomRepository roomRepository = RoomRepository.getInstance();
-            Calendar calendar1 = Calendar.getInstance();
-            Calendar calendar2 = Calendar.getInstance();
-            calendar2.add(Calendar.MINUTE,45);
-            meetingRepository.addMeeting("Réunion 1", calendar1, calendar2, roomRepository.getRoomsList().get(1), Arrays.asList(new Participant("Participant 1"), new Participant("Participant 2"), new Participant("Participant 3")));
-            calendar1.add(Calendar.HOUR,5);
-            calendar2.add(Calendar.HOUR,5);
-            calendar2.add(Calendar.MINUTE,45);
-            meetingRepository.addMeeting("Réunion 2", calendar1, calendar2, roomRepository.getRoomsList().get(5), Arrays.asList(new Participant("Participant 1"), new Participant("Participant 2"), new Participant("Participant 3")));
-            calendar1.add(Calendar.HOUR,22);
-            calendar2.add(Calendar.HOUR,22);
-            calendar2.add(Calendar.MINUTE,45);
-            meetingRepository.addMeeting("Réunion 3", calendar1, calendar2, roomRepository.getRoomsList().get(3), Arrays.asList(new Participant("Participant 1"), new Participant("Participant 2"), new Participant("Participant 3")));
-            calendar1.add(Calendar.HOUR,2);
-            calendar2.add(Calendar.HOUR,2);
-            calendar2.add(Calendar.MINUTE,45);
-            meetingRepository.addMeeting("Réunion 4", calendar1, calendar2, roomRepository.getRoomsList().get(7), Arrays.asList(new Participant("Participant 1"), new Participant("Participant 2"), new Participant("Participant 3")));
         }
 
         Bundle result = new Bundle();
