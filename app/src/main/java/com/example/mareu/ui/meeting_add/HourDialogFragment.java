@@ -82,7 +82,7 @@ public class HourDialogFragment extends DialogFragment {
             getParentFragmentManager().setFragmentResult("meetingAddBeginHour", bundle);
         }
         else if (tag == Tag.ENDHOUR) {
-            getParentFragmentManager().setFragmentResult("meetingAddEnHour", bundle);
+            getParentFragmentManager().setFragmentResult("meetingAddEndHour", bundle);
         }
     }
 }
