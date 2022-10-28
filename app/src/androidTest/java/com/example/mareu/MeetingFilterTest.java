@@ -14,7 +14,6 @@ import com.example.mareu.model.Meeting;
 import com.example.mareu.model.Room;
 import com.example.mareu.repository.MeetingRepository;
 import com.example.mareu.ui.MainActivity;
-import com.example.mareu.ui.meeting_list.MeetingListFragment;
 import com.example.mareu.utils.FakeMeeting;
 import com.example.mareu.utils.RecyclerViewComparatorAssertion;
 
@@ -26,7 +25,7 @@ import org.junit.runner.RunWith;
 import java.util.Calendar;
 
 @RunWith(AndroidJUnit4.class)
-public class MeetingSortTest {
+public class MeetingFilterTest {
 
     private MeetingRepository meetingRepository;
 
@@ -56,11 +55,11 @@ public class MeetingSortTest {
     }
 
     @Test
-    public void meetingSortByDate_check() {
+    public void meetingFilterByDate_check() {
         // Given
 
         // When
-        onView(ViewMatchers.withId(R.id.sort)).perform(click());
+        onView(ViewMatchers.withId(R.id.filter_menu)).perform(click());
         onView(withText(R.string.by_date)).perform(click());
 
         // Then
@@ -71,11 +70,11 @@ public class MeetingSortTest {
     }
 
     @Test
-    public void meetingSortByRoom_check() {
+    public void meetingFilterByRoom_check() {
         // Given
 
         // When
-        onView(ViewMatchers.withId(R.id.sort)).perform(click());
+        onView(ViewMatchers.withId(R.id.filter_menu)).perform(click());
         onView(withText(R.string.by_room)).perform(click());
 
         // Then

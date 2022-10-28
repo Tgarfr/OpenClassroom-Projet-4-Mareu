@@ -9,20 +9,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.mareu.R;
-import com.example.mareu.repository.MeetingRepository;
 import com.example.mareu.ui.meeting_add.MeetingAddFragment;
 import com.example.mareu.ui.meeting_list.MeetingListFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    MeetingRepository meetingRepository;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        meetingRepository = MeetingRepository.getInstance();
     }
 
     @Override
@@ -34,16 +29,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId() == R.id.sort_by_date) {
-            meetingRepository.sortByDate();
+        if (item.getItemId() == R.id.filter_by_date) {
+            getSupportFragmentManager().setFragmentResult("filterByDate", null);
         }
-        if (item.getItemId() == R.id.sort_by_room) {
-            meetingRepository.sortByRoom();
+        if (item.getItemId() == R.id.filter_by_room) {
+            getSupportFragmentManager().setFragmentResult("filterByRoom", null);
         }
-
-        getSupportFragmentManager().setFragmentResult("refreshMeetingList", null);
-
         return super.onOptionsItemSelected(item);
     }
 

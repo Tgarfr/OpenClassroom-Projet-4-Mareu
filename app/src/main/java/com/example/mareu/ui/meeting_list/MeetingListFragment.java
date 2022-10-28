@@ -21,13 +21,13 @@ import java.util.Locale;
 public class MeetingListFragment extends Fragment {
 
     private RecyclerView recyclerView;
+    private MeetingListRecyclerViewAdapter meetingListRecyclerViewAdapter;
     private MeetingRepository meetingRepository;
-    private View view;
     private FragmentManager fragmentManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_list_meeting, container, false);
+        View view = inflater.inflate(R.layout.fragment_list_meeting, container, false);
 
         Locale locale = getResources().getConfiguration().locale;
         meetingRepository = MeetingRepository.getInstance();
@@ -35,7 +35,8 @@ public class MeetingListFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.list_meetings);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new MeetingListRecyclerViewAdapter(meetingRepository, getActivity(), locale));
+        meetingListRecyclerViewAdapter = new MeetingListRecyclerViewAdapter(meetingRepository, getActivity(), locale);
+        recyclerView.setAdapter(meetingListRecyclerViewAdapter);
 
         if (getResources().getBoolean(R.bool.landscapeMode) == false) {
             FloatingActionButton AddButton = view.findViewById(R.id.add_meeting_button);
@@ -49,12 +50,15 @@ public class MeetingListFragment extends Fragment {
             }
         });
 
+        getParentFragmentManager().setFragmentResultListener("filterByDate", this, (String requestKey, Bundle bundle) -> { filterByDate(); } );
+        getParentFragmentManager().setFragmentResultListener("filterByRoom", this, (String requestKey, Bundle bundle) -> { filterByRoom(); } );
+
         return view;
     }
 
     @Override
     public void onResume() {
-        recyclerView.getAdapter().notifyDataSetChanged();
+        meetingListRecyclerViewAdapter.notifyDataSetChanged();
         super.onResume();
     }
 
@@ -66,4 +70,12 @@ public class MeetingListFragment extends Fragment {
                     .commit();
         }
     };
+
+    private void filterByDate() {
+        meetingListRecyclerViewAdapter.filterByDate();
+    }
+
+    private void filterByRoom() {
+        meetingListRecyclerViewAdapter.filterByRoom();
+    }
 }

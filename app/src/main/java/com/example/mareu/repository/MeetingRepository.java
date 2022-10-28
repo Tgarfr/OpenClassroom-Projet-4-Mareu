@@ -41,7 +41,9 @@ public class MeetingRepository {
         return meetingList.size();
     }
 
-    public void sortByDate() {
+    public List<Meeting> sortByDate() {
+        List<Meeting> meetingListSortByDate = new ArrayList<Meeting>();
+        meetingListSortByDate.addAll(meetingList);
         Comparator<Meeting> comparator = new Comparator<Meeting>() {
             @Override
             public int compare(Meeting meeting1, Meeting meeting2) {
@@ -56,17 +58,21 @@ public class MeetingRepository {
                 }
             }
         };
-        Collections.sort(meetingList,comparator);
+        Collections.sort(meetingListSortByDate,comparator);
+        return meetingListSortByDate;
     }
 
-    public void sortByRoom() {
+    public List<Meeting> sortByRoom() {
+        List<Meeting> meetingListSortByRoom = new ArrayList<Meeting>();
+        meetingListSortByRoom.addAll(meetingList);
         Comparator<Meeting> comparator = new Comparator<Meeting>() {
             @Override
             public int compare(Meeting meeting1, Meeting meeting2) {
                 return meeting1.getRoom().getId() - meeting2.getRoom().getId();
             }
         };
-        Collections.sort(meetingList,comparator);
+        Collections.sort(meetingListSortByRoom,comparator);
+        return meetingListSortByRoom;
     }
 
     public void clearList() {
