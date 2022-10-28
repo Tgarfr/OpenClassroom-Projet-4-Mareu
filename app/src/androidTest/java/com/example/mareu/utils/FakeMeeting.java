@@ -14,7 +14,7 @@ public class FakeMeeting {
         String name = "Meeting Name Test";
         Calendar beginDate = Calendar.getInstance();
         Calendar endDate = Calendar.getInstance();
-        endDate.add(Calendar.MINUTE, 45);
+        endDate.add(Calendar.MINUTE, 50);
         Room room = new Room(3, "Salle 3");
         List<Participant> participantList = new ArrayList<Participant>();
         participantList.add(new Participant("test@yahoo.fr"));
