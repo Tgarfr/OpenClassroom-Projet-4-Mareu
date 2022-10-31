@@ -54,7 +54,7 @@ public class MeetingAddTest {
 
         onView(withId(R.id.add_meeting_date_button)).perform(click());
         onView(withId(R.id.dialog_date_picker))
-                .perform(PickerActions.setDate(expectedMeeting.getBeginDate().get(Calendar.YEAR), expectedMeeting.getBeginDate().get(Calendar.MONTH), expectedMeeting.getBeginDate().get(Calendar.DAY_OF_MONTH)));
+                .perform(PickerActions.setDate(expectedMeeting.getBeginDate().get(Calendar.YEAR), expectedMeeting.getBeginDate().get(Calendar.MONTH)+1, expectedMeeting.getBeginDate().get(Calendar.DAY_OF_MONTH)));
         onView(withId(R.id.dialog_date_button)).perform(click());
 
         onView(withId(R.id.add_meeting_hour_button)).perform(click());

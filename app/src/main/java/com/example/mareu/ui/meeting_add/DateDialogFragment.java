@@ -49,17 +49,13 @@ public class DateDialogFragment extends DialogFragment {
     }
 
     private void setDateToCalendarView() {
-        Calendar date = Calendar.getInstance();
-        date.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        date.set(Calendar.MONTH, month);
-        date.set(Calendar.YEAR, year);
         datePickerView.updateDate(year, month, dayOfMonth);
     }
 
     private void returDateToParentFragment() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_MONTH, datePickerView.getDayOfMonth());
-        calendar.set(Calendar.MONTH, datePickerView.getMonth()+1);
+        calendar.set(Calendar.MONTH, datePickerView.getMonth());
         calendar.set(Calendar.YEAR, datePickerView.getYear());
 
         Bundle bundle = new Bundle();
