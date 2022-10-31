@@ -90,7 +90,7 @@ public class MeetingRepositoryTest {
         meetingRepository.addMeeting("February meeting", february, fakeMeeting.getEndDate(), fakeMeeting.getRoom(), fakeMeeting.getParticipantList());
 
         // Act
-        List<Meeting> meetingFilterList = meetingRepository.sortByDate();
+        List<Meeting> meetingFilterList = meetingRepository.sortByDate(null);
 
         // Assert
         for (int i = 0; i < meetingFilterList.size()-1; i++) {
@@ -109,7 +109,7 @@ public class MeetingRepositoryTest {
         meetingRepository.addMeeting("Room 3 meeting", fakeMeeting.getBeginDate(), fakeMeeting.getEndDate(), new Room(3, "Room 3"), fakeMeeting.getParticipantList());
 
         // Act
-        List<Meeting> meetingFilterList = meetingRepository.sortByRoom();
+        List<Meeting> meetingFilterList = meetingRepository.sortByRoom(null);
 
         // Assert
         for (int i = 0; i < meetingRepository.countMeeting()-1; i++) {

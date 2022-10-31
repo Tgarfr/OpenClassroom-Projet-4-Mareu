@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mareu.R;
@@ -20,6 +21,7 @@ public class ParticipantListDialogFragmentAdapter extends RecyclerView.Adapter<P
         this.contributorsList = contributorList;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -37,7 +39,7 @@ public class ParticipantListDialogFragmentAdapter extends RecyclerView.Adapter<P
         return contributorsList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView contributorEmailLayout = itemView.findViewById(R.id.item_participant_email);
 
         public ViewHolder(View itemView) {

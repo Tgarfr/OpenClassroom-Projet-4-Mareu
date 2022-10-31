@@ -7,59 +7,55 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentResultListener;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mareu.R;
+import com.example.mareu.model.Meeting;
 import com.example.mareu.repository.MeetingRepository;
 import com.example.mareu.ui.meeting_add.MeetingAddFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.List;
 import java.util.Locale;
 
-public class MeetingListFragment extends Fragment {
+public class MeetingListFragment extends Fragment implements MeetingListRecyclerViewAdapter.OnMeetingClickListener {
 
-    private RecyclerView recyclerView;
-    private MeetingListRecyclerViewAdapter meetingListRecyclerViewAdapter;
     private MeetingRepository meetingRepository;
+    private MeetingListRecyclerViewAdapter meetingListRecyclerViewAdapter;
+    private List<Meeting> displayMeetingList;
     private FragmentManager fragmentManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_meeting, container, false);
 
-        Locale locale = getResources().getConfiguration().locale;
-        meetingRepository = MeetingRepository.getInstance();
         fragmentManager = getParentFragmentManager();
+        Locale locale = getResources().getConfiguration().locale;
 
-        recyclerView = view.findViewById(R.id.list_meetings);
+        meetingRepository = MeetingRepository.getInstance();
+        displayMeetingList = meetingRepository.getMeetingList();
+
+        RecyclerView recyclerView = view.findViewById(R.id.list_meetings);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        meetingListRecyclerViewAdapter = new MeetingListRecyclerViewAdapter(meetingRepository, getActivity(), locale);
+        meetingListRecyclerViewAdapter = new MeetingListRecyclerViewAdapter(displayMeetingList, getActivity(), locale, this);
         recyclerView.setAdapter(meetingListRecyclerViewAdapter);
 
-        if (getResources().getBoolean(R.bool.landscapeMode) == false) {
+        if (!getResources().getBoolean(R.bool.landscapeMode)) {
             FloatingActionButton AddButton = view.findViewById(R.id.add_meeting_button);
             AddButton.setOnClickListener(AddButtonClick);
         }
 
-        fragmentManager.setFragmentResultListener("refreshMeetingList", this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(String requestKey, Bundle bundle) {
-                onResume();
-            }
-        });
+        fragmentManager.setFragmentResultListener("refreshMeetingList", this, (requestKey, bundle) -> onResume());
 
-        getParentFragmentManager().setFragmentResultListener("filterByDate", this, (String requestKey, Bundle bundle) -> { filterByDate(); } );
-        getParentFragmentManager().setFragmentResultListener("filterByRoom", this, (String requestKey, Bundle bundle) -> { filterByRoom(); } );
+        getParentFragmentManager().setFragmentResultListener("filterByDate", this, (String requestKey, Bundle bundle) -> filterByDate());
+        getParentFragmentManager().setFragmentResultListener("filterByRoom", this, (String requestKey, Bundle bundle) -> filterByRoom());
 
         return view;
     }
 
-    @Override
-    public void onResume() {
+    public void refreshList() {
         meetingListRecyclerViewAdapter.notifyDataSetChanged();
-        super.onResume();
     }
 
     View.OnClickListener AddButtonClick = new View.OnClickListener() {
@@ -72,10 +68,24 @@ public class MeetingListFragment extends Fragment {
     };
 
     private void filterByDate() {
-        meetingListRecyclerViewAdapter.filterByDate();
+        meetingListRecyclerViewAdapter.setMeetingList(meetingRepository.sortByDate(displayMeetingList));
+        refreshList();
     }
 
     private void filterByRoom() {
-        meetingListRecyclerViewAdapter.filterByRoom();
+        meetingListRecyclerViewAdapter.setMeetingList(meetingRepository.sortByRoom(displayMeetingList));
+        refreshList();
+    }
+
+    public void deleteMeeting(int position) {
+        Meeting deleteMeeting = displayMeetingList.get(position);
+        meetingRepository.deleteMeeting(deleteMeeting);
+        displayMeetingList.remove(deleteMeeting);
+        meetingListRecyclerViewAdapter.notifyItemRemoved(position);
+    }
+
+    @Override
+    public void onMeetingClick(int position) {
+        deleteMeeting(position);
     }
 }

@@ -30,10 +30,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.filter_by_date) {
-            getSupportFragmentManager().setFragmentResult("filterByDate", null);
+            getSupportFragmentManager().setFragmentResult("filterByDate", new Bundle());
         }
         if (item.getItemId() == R.id.filter_by_room) {
-            getSupportFragmentManager().setFragmentResult("filterByRoom", null);
+            getSupportFragmentManager().setFragmentResult("filterByRoom", new Bundle());
         }
         return super.onOptionsItemSelected(item);
     }
