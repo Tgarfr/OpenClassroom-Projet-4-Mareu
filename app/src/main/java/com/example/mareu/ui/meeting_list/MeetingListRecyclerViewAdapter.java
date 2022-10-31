@@ -8,13 +8,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mareu.R;
 import com.example.mareu.model.Meeting;
 import com.example.mareu.model.Participant;
-import com.example.mareu.repository.MeetingRepository;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,18 +23,27 @@ import java.util.Locale;
 
 public class MeetingListRecyclerViewAdapter extends RecyclerView.Adapter<MeetingListRecyclerViewAdapter.ViewHolder> {
 
-    MeetingRepository meetingRepository;
     List<Meeting> displayMeetingList;
     Locale locale;
     Context context;
+    OnMeetingClickListener onMeetingClickListener;
 
-    public MeetingListRecyclerViewAdapter(MeetingRepository meetingRepository, Context context, Locale locale) {
-        this.meetingRepository = meetingRepository;
-        this.displayMeetingList = meetingRepository.getMeetingList();
-        this.context = context;
-        this.locale = locale;
+    interface OnMeetingClickListener {
+        void onMeetingClick(int position);
     }
 
+    public MeetingListRecyclerViewAdapter(List<Meeting> displayMeetingList, Context context, Locale locale, OnMeetingClickListener onMeetingClickListener) {
+        this.displayMeetingList = displayMeetingList;
+        this.context = context;
+        this.locale = locale;
+        this.onMeetingClickListener = onMeetingClickListener;
+    }
+
+    public void setMeetingList(List<Meeting> meetingList) {
+        this.displayMeetingList = meetingList;
+    }
+
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -43,7 +52,7 @@ public class MeetingListRecyclerViewAdapter extends RecyclerView.Adapter<Meeting
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Meeting meeting = displayMeetingList.get(position);
 
         if (meeting.getBeginDate().getTimeInMillis() < Calendar.getInstance().getTimeInMillis()) {
@@ -53,18 +62,12 @@ public class MeetingListRecyclerViewAdapter extends RecyclerView.Adapter<Meeting
         }
 
         final String hourDisplay = new SimpleDateFormat("HH:mm", locale).format(meeting.getBeginDate().getTimeInMillis());
-        holder.meetingNameLayout.setText(meeting.getName()+" - "+hourDisplay+" - "+meeting.getRoom().getName());
+
+        holder.meetingNameLayout.setText(String.format("%s - %s - %s", meeting.getName(), hourDisplay, meeting.getRoom().getName()));
 
         holder.meetingEmailsLayout.setText(participantEmailListDisplay(meeting));
 
-        holder.meetingDeleteButtonLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                meetingRepository.deleteMeeting(meeting);
-                displayMeetingList.remove(meeting);
-                notifyItemRemoved(position);
-            }
-        });
+        holder.meetingDeleteButtonLayout.setOnClickListener(view -> onMeetingClickListener.onMeetingClick(position));
     }
 
     @Override
@@ -72,7 +75,7 @@ public class MeetingListRecyclerViewAdapter extends RecyclerView.Adapter<Meeting
         return displayMeetingList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView meetingCircleLayout = itemView.findViewById(R.id.item_meeting_circle);
         public TextView meetingNameLayout = itemView.findViewById(R.id.item_meeting_name);
         public TextView meetingEmailsLayout = itemView.findViewById(R.id.item_meeting_emails);
@@ -85,20 +88,10 @@ public class MeetingListRecyclerViewAdapter extends RecyclerView.Adapter<Meeting
 
     private String participantEmailListDisplay(Meeting meeting) {
         final List<Participant> participantList = meeting.getParticipantList();
-        String participantEmailListDiplay = participantList.get(0).getEmail();
+        StringBuilder participantEmailListDiplay = new StringBuilder(participantList.get(0).getEmail());
         for (int i = 1; i < participantList.size(); i++ ) {
-            participantEmailListDiplay = participantEmailListDiplay+", "+participantList.get(i).getEmail();
+            participantEmailListDiplay.append(", ").append(participantList.get(i).getEmail());
         }
-        return participantEmailListDiplay;
-    }
-
-    public void filterByDate() {
-        displayMeetingList = meetingRepository.sortByDate();
-        notifyDataSetChanged();
-    }
-
-    public void filterByRoom() {
-        displayMeetingList = meetingRepository.sortByRoom();
-        notifyDataSetChanged();
+        return participantEmailListDiplay.toString();
     }
 }

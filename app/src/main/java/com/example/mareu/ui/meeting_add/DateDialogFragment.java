@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.mareu.R;
@@ -26,6 +27,7 @@ public class DateDialogFragment extends DialogFragment {
         this.year = year;
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -36,12 +38,9 @@ public class DateDialogFragment extends DialogFragment {
         Button validateButton = view.findViewById(R.id.dialog_date_button);
         setDateToCalendarView();
 
-        validateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                returDateToParentFragment();
-                dismiss();
-            }
+        validateButton.setOnClickListener(view1 -> {
+            returDateToParentFragment();
+            dismiss();
         });
 
         builder.setView(view);

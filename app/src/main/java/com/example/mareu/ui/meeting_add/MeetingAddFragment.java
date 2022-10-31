@@ -28,10 +28,10 @@ import java.util.List;
 public class MeetingAddFragment extends Fragment  {
 
     private String meetingName;
-    private Calendar meetingBeginCalendar;
-    private Calendar meetingEndCalendar;
+    private final Calendar meetingBeginCalendar;
+    private final Calendar meetingEndCalendar;
     private Room meetingRoom;
-    private List<Participant> meetingParticipantList;
+    private final List<Participant> meetingParticipantList;
 
     private View view;
     private EditText nameEditText;
@@ -51,7 +51,7 @@ public class MeetingAddFragment extends Fragment  {
         meetingEndCalendar = Calendar.getInstance();
         meetingEndCalendar.add(Calendar.MINUTE, 45);
         meetingRoom = null;
-        meetingParticipantList = new ArrayList<Participant>();
+        meetingParticipantList = new ArrayList<>();
     }
 
     @Override
@@ -60,16 +60,16 @@ public class MeetingAddFragment extends Fragment  {
         initLayout();
         setDataToViews();
 
-        beginDateButton.setOnClickListener( (View view) -> { beginDateButtonClick(); } );
-        beginHourButton.setOnClickListener( (View view) -> { beginHourButtonClick(); } );
-        endHourButton.setOnClickListener( (View view) -> { endHourButtonClick(); } );
-        participantListButton.setOnClickListener( (View view) -> { participantListButtonClick(); } );
-        participantAddButton.setOnClickListener( (View view) -> { participantAddButtonClick(); } );
-        meetingAddButton.setOnClickListener( (View view) -> { addNewMeetingToRepository(); } );
+        beginDateButton.setOnClickListener( (View view) -> beginDateButtonClick());
+        beginHourButton.setOnClickListener( (View view) -> beginHourButtonClick());
+        endHourButton.setOnClickListener( (View view) -> endHourButtonClick());
+        participantListButton.setOnClickListener( (View view) -> participantListButtonClick());
+        participantAddButton.setOnClickListener( (View view) -> participantAddButtonClick());
+        meetingAddButton.setOnClickListener( (View view) -> addNewMeetingToRepository());
 
-        getParentFragmentManager().setFragmentResultListener("meetingAddDate", this, (String requestKey, Bundle bundle) -> { getBeginDateFromDialog(bundle); } );
-        getParentFragmentManager().setFragmentResultListener("meetingAddBeginHour", this, (String requestKey, Bundle bundle) -> { getBeginHourFromDialog(bundle); } );
-        getParentFragmentManager().setFragmentResultListener("meetingAddEndHour", this, (String requestKey, Bundle bundle) -> { getEndHourFromDialog(bundle); } );
+        getParentFragmentManager().setFragmentResultListener("meetingAddDate", this, (String requestKey, Bundle bundle) -> getBeginDateFromDialog(bundle));
+        getParentFragmentManager().setFragmentResultListener("meetingAddBeginHour", this, (String requestKey, Bundle bundle) -> getBeginHourFromDialog(bundle));
+        getParentFragmentManager().setFragmentResultListener("meetingAddEndHour", this, (String requestKey, Bundle bundle) -> getEndHourFromDialog(bundle));
 
         return view;
     }
@@ -174,12 +174,12 @@ public class MeetingAddFragment extends Fragment  {
     }
 
     private void beginHourButtonClick() {
-        HourDialogFragment hourDialogFragment = new HourDialogFragment(meetingBeginCalendar.get(Calendar.HOUR_OF_DAY), meetingBeginCalendar.get(Calendar.MINUTE), HourDialogFragment.Tag.BEGINHOUR);
+        HourDialogFragment hourDialogFragment = new HourDialogFragment(getActivity() ,meetingBeginCalendar.get(Calendar.HOUR_OF_DAY), meetingBeginCalendar.get(Calendar.MINUTE), HourDialogFragment.Tag.BEGINHOUR);
         hourDialogFragment.show(this.getParentFragmentManager(), "Hour");
     }
 
     private void endHourButtonClick() {
-        HourDialogFragment hourDialogFragment = new HourDialogFragment(meetingEndCalendar.get(Calendar.HOUR_OF_DAY), meetingEndCalendar.get(Calendar.MINUTE), HourDialogFragment.Tag.ENDHOUR);
+        HourDialogFragment hourDialogFragment = new HourDialogFragment(getActivity(),meetingEndCalendar.get(Calendar.HOUR_OF_DAY), meetingEndCalendar.get(Calendar.MINUTE), HourDialogFragment.Tag.ENDHOUR);
         hourDialogFragment.show(this.getParentFragmentManager(), "EndTime");
     }
 
@@ -202,11 +202,7 @@ public class MeetingAddFragment extends Fragment  {
 
     private boolean verifyEmail(String email) {
         String emailPattern = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\\.[a-zA-Z0-9]+$";
-        if (email.matches(emailPattern)) {
-            return true;
-        } else {
-            return false;
-        }
+        return email.matches(emailPattern);
     }
 
     private void addNewMeetingToRepository() {
@@ -223,7 +219,7 @@ public class MeetingAddFragment extends Fragment  {
             Toast.makeText(getActivity(), "Nouvelle réunion ajouté", Toast.LENGTH_SHORT).show();
 
             if (getResources().getBoolean(R.bool.landscapeMode)) {
-                getParentFragmentManager().setFragmentResult("refreshMeetingList", null);
+                getParentFragmentManager().setFragmentResult("refreshMeetingList", new Bundle());
             }
             else {
                 getParentFragmentManager().beginTransaction()

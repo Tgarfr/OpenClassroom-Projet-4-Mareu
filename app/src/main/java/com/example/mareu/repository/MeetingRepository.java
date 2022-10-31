@@ -15,7 +15,7 @@ public class MeetingRepository {
     List<Meeting> meetingList;
 
     private MeetingRepository() {
-        meetingList = new ArrayList<Meeting>();
+        meetingList = new ArrayList<>();
     }
 
     private static final MeetingRepository INSTANCE = new MeetingRepository();
@@ -41,36 +41,32 @@ public class MeetingRepository {
         return meetingList.size();
     }
 
-    public List<Meeting> sortByDate() {
-        List<Meeting> meetingListSortByDate = new ArrayList<Meeting>();
-        meetingListSortByDate.addAll(meetingList);
-        Comparator<Meeting> comparator = new Comparator<Meeting>() {
-            @Override
-            public int compare(Meeting meeting1, Meeting meeting2) {
-                if (meeting1.getBeginDate().before(meeting2.getBeginDate())) {
-                    return -1;
-                }
-                if (meeting1.getBeginDate().after(meeting2.getBeginDate())) {
-                    return 1;
-                }
-                else {
-                    return 0;
-                }
+    public List<Meeting> sortByDate(List<Meeting> meetingList) {
+        if (meetingList == null) {
+            meetingList = this.meetingList;
+        }
+        List<Meeting> meetingListSortByDate = new ArrayList<>(meetingList);
+        Comparator<Meeting> comparator = (meeting1, meeting2) -> {
+            if (meeting1.getBeginDate().before(meeting2.getBeginDate())) {
+                return -1;
+            }
+            if (meeting1.getBeginDate().after(meeting2.getBeginDate())) {
+                return 1;
+            }
+            else {
+                return 0;
             }
         };
         Collections.sort(meetingListSortByDate,comparator);
         return meetingListSortByDate;
     }
 
-    public List<Meeting> sortByRoom() {
-        List<Meeting> meetingListSortByRoom = new ArrayList<Meeting>();
-        meetingListSortByRoom.addAll(meetingList);
-        Comparator<Meeting> comparator = new Comparator<Meeting>() {
-            @Override
-            public int compare(Meeting meeting1, Meeting meeting2) {
-                return meeting1.getRoom().getId() - meeting2.getRoom().getId();
-            }
-        };
+    public List<Meeting> sortByRoom(List<Meeting> meetingList) {
+        if (meetingList == null) {
+            meetingList = this.meetingList;
+        }
+        List<Meeting> meetingListSortByRoom = new ArrayList<>(meetingList);
+        Comparator<Meeting> comparator = (meeting1, meeting2) -> meeting1.getRoom().getId() - meeting2.getRoom().getId(); // Comparator.comparingInt not compatible with API21
         Collections.sort(meetingListSortByRoom,comparator);
         return meetingListSortByRoom;
     }

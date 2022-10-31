@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,13 +18,14 @@ import java.util.List;
 
 public class ParticipantListDialogFragment extends DialogFragment {
 
-    private List<Participant> participantList;
+    private final List<Participant> participantList;
 
     public ParticipantListDialogFragment(List<Participant> participantList) {
         this.participantList = participantList;
     }
 
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -35,12 +37,7 @@ public class ParticipantListDialogFragment extends DialogFragment {
         recyclerView.setAdapter(new ParticipantListDialogFragmentAdapter(participantList));
 
         Button buttonParticipantDialogLayout = view.findViewById(R.id.dialog_participant_button);
-        buttonParticipantDialogLayout.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                dismiss();
-            }
-        });
+        buttonParticipantDialogLayout.setOnClickListener(view1 -> dismiss());
 
         builder.setTitle("Liste des participants");
 

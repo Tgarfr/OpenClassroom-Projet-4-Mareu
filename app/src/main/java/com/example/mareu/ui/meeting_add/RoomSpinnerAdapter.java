@@ -34,11 +34,13 @@ public class RoomSpinnerAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(int i, View rowView, ViewGroup viewGroup) {
         Room room = this.getItem(i);
 
-        View rowView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.item_room_spinner_add_meeting, viewGroup, false);
+        if (rowView == null) {
+            rowView = LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.item_room_spinner_add_meeting, viewGroup, false);
+        }
 
         TextView roomNameItemLayout = rowView.findViewById(R.id.spinner_item_room_name);
         roomNameItemLayout.setText(room.getName());
