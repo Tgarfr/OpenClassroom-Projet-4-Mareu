@@ -1,1 +1,1 @@
-Application de gestion de réunions
+Mareu, application de gestion de réunions.
